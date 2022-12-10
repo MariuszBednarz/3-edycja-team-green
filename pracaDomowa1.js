@@ -95,18 +95,6 @@ for (i = 0; i < peopleWithNickname.length; i++) {
   console.log(peopleWithNickname[i].introduceyourself());
 }
 
-//  DANE WEJŚCIOWE
-// const people = [
-//   {
-//     firstName: "Bartolomeo",
-//     lastName: "Lozano",
-//     nickname: "Rabona",
-//     introduceYourself: "", // funkcja zamiast pustego stringa
-//   },
-// ];
-
-// const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
-
 /*
     3. 
     a) Dodaj do każdego obiektu funkcję getFavouriteColor
@@ -130,7 +118,33 @@ for (i = 0; i < peopleWithNickname.length; i++) {
     - w funkcji musicie użyć słówka this, parametru i tablicy, która jest na zewnątrz, tablica z kolorami może mieć
     dowoloną ilość kolorów
 */
+Object.prototype.getFavouriteColor = function getFavouriteColor(number) {
+  const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
+  let num = number;
+  const letterCount =
+    this.firstName.length + this.lastName.length + this.nickName.length;
+  let clrArrIndex;
+  let favoriteColor;
+  if (number > 30) {
+    console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30");
+  } else if (number < 1) {
+    console.log("podałeś za małą liczbę, liczba nie może być mniejsza niż 1");
+  } else if (number == null || number == undefined) {
+    num = 5;
+  }
 
+  if (num >= 1 && num <= 30) {
+    clrArrIndex = Math.abs(letterCount - num) % colors.length;
+    favoriteColor = colors[clrArrIndex];
+  }
+  return favoriteColor;
+};
+
+let colorNumber = 6;
+
+for (i = 0; i < peopleWithNickname.length; i++) {
+  console.log(peopleWithNickname[i].getFavouriteColor(colorNumber));
+}
 /*
     4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
     a) funkcja powinna przyjąć 2 parametry (obiekt osoby i liczbę z zakresu 1 - 30)
