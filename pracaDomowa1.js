@@ -61,8 +61,6 @@ const peopleWithNickname = people.map((element) => ({
   nickName: nicknameRecomb(element.firstName, element.lastName),
 }));
 
-const person1 = peopleWithNickname[0];
-
 /* 
     2. 
     a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this wyświetli w konsoli tekst powitalny.
@@ -88,6 +86,16 @@ const person1 = peopleWithNickname[0];
     - postaraj się zdefiniować funkcję powitalną tylko raz (nie rób tego w pętli, ani funkcji map)
     
 */
+
+Object.prototype.introduceyourself = function introduceyourself() {
+  console.log(
+    `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickName}`
+  );
+};
+
+for (i = 0; i < peopleWithNickname.length; i++) {
+  console.log(peopleWithNickname[i].introduceyourself());
+}
 
 //  DANE WEJŚCIOWE
 // const people = [
