@@ -1,15 +1,3 @@
-//  DANE WEJŚCIOWE
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-  },
-  {
-    firstName: "Mateo",
-    lastName: "Loza",
-  },
-];
-
 /* 
     1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
     a) pobierze 3 pierwsze litery imienia, odwróci ich kolejność i zapisze do zmiennej
@@ -39,15 +27,41 @@ const people = [
     - Na stringach czy pojedynczych literkach możemy używać metod toLowerCase(), toUpperCase()
 */
 
-//  DANE WEJŚCIOWE
 const people = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
-    nickname: "Rabona",
+  },
+  {
+    firstName: "Mateo",
+    lastName: "Loza",
   },
 ];
 
+function nicknameRecomb(fName, lName) {
+  const nicknameComp1 = fName
+    .split("")
+    .reverse()
+    .slice(-3)
+    .map((element, index) => {
+      if (index == 0) {
+        return element.toUpperCase();
+      } else {
+        return element.toLowerCase();
+      }
+    });
+  const nicknameComp2 = lName.split("").slice(-3).reverse();
+  const finalNickname = nicknameComp1.concat(nicknameComp2).join("");
+  return finalNickname;
+}
+
+const peopleWithNickname = people.map((element) => ({
+  firstName: element.firstName,
+  lastName: element.lastName,
+  nickName: nicknameRecomb(element.firstName, element.lastName),
+}));
+
+const person1 = peopleWithNickname[0];
 
 /* 
     2. 
@@ -76,16 +90,16 @@ const people = [
 */
 
 //  DANE WEJŚCIOWE
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-    nickname: "Rabona",
-    introduceYourself: "", // funkcja zamiast pustego stringa
-  },
-];
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//     nickname: "Rabona",
+//     introduceYourself: "", // funkcja zamiast pustego stringa
+//   },
+// ];
 
-const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
+// const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
 
 /*
     3. 
@@ -177,44 +191,44 @@ const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
      Na przykład 'Kamil Bartek'
     INPUT:
 */
-const nestedObject = {
-  name: "Kamil",
-  children: [
-    {
-      name: "Zosia",
-    },
-    {
-      name: "Krysia",
-      name2: "Barbara",
-      children: [
-        {
-          name: "Basia",
-          children: [
-            {
-              name: "Monika",
-              name2: "Viola",
-              children: [
-                {
-                  name: "Mateusz",
-                },
-                {
-                  name: "Sebastian",
-                  name2: "August",
-                  name3: "Franciszek",
-                  children: [
-                    { name: "Alex" },
-                    { name: "Stasio" },
-                    {
-                      name: "Paulina",
-                      children: [{ name: "Kuba" }, { name: "Kacper" }],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ],
-};
+// const nestedObject = {
+//   name: "Kamil",
+//   children: [
+//     {
+//       name: "Zosia",
+//     },
+//     {
+//       name: "Krysia",
+//       name2: "Barbara",
+//       children: [
+//         {
+//           name: "Basia",
+//           children: [
+//             {
+//               name: "Monika",
+//               name2: "Viola",
+//               children: [
+//                 {
+//                   name: "Mateusz",
+//                 },
+//                 {
+//                   name: "Sebastian",
+//                   name2: "August",
+//                   name3: "Franciszek",
+//                   children: [
+//                     { name: "Alex" },
+//                     { name: "Stasio" },
+//                     {
+//                       name: "Paulina",
+//                       children: [{ name: "Kuba" }, { name: "Kacper" }],
+//                     },
+//                   ],
+//                 },
+//               ],
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//   ],
+// };
