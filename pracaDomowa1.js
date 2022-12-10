@@ -88,9 +88,7 @@ const peopleWithNickname = people.map((element) => ({
 */
 
 Object.prototype.introduceyourself = function introduceyourself() {
-  console.log(
-    `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickName}`
-  );
+  return `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickName}`;
 };
 
 for (i = 0; i < peopleWithNickname.length; i++) {
