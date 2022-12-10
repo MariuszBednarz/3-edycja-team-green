@@ -143,7 +143,13 @@ Object.prototype.getFavouriteColor = function getFavouriteColor(number) {
 let colorNumber = 6;
 
 for (i = 0; i < peopleWithNickname.length; i++) {
-  console.log(peopleWithNickname[i].getFavouriteColor(colorNumber));
+  console.log(
+    "Favorite color of",
+    peopleWithNickname[i].firstName,
+    peopleWithNickname[i].lastName,
+    "is",
+    peopleWithNickname[i].getFavouriteColor(colorNumber)
+  );
 }
 /*
     4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
