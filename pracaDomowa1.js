@@ -1,49 +1,49 @@
 //  DANE WEJŚCIOWE
 
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-  },
-  {
-    firstName: "Mateo",
-    lastName: "Loza",
-  },
-];
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//   },
+//   {
+//     firstName: "Mateo",
+//     lastName: "Loza",
+//   },
+// ];
 
-function createNickname(object) {
-  const takeLetter = object.map((a, index) => {
-    let fName = object[index].firstName
-      .substr(0, 3)
-      .split("")
-      .reverse()
-      .join("")
-      .toLowerCase();
+// function createNickname(object) {
+//   const takeLetter = object.map((a, index) => {
+//     let fName = object[index].firstName
+//       .substr(0, 3)
+//       .split("")
+//       .reverse()
+//       .join("")
+//       .toLowerCase();
 
-    let lName = object[index].lastName
-      .substr(object[index].lastName.length - 3)
-      .split("")
-      .reverse()
-      .join("")
-      .toLowerCase();
+//     let lName = object[index].lastName
+//       .substr(object[index].lastName.length - 3)
+//       .split("")
+//       .reverse()
+//       .join("")
+//       .toLowerCase();
 
-    let nickname = fName.concat(lName);
+//     let nickname = fName.concat(lName);
 
-    const firstLetter = nickname?.slice(0, 1)?.toUpperCase();
-    const restOfTheWord = nickname.slice(1);
+//     const firstLetter = nickname?.slice(0, 1)?.toUpperCase();
+//     const restOfTheWord = nickname.slice(1);
 
-    return firstLetter + restOfTheWord;
-  });
+//     return firstLetter + restOfTheWord;
+//   });
 
-  for (number in object) {
-    object[number].nickname = takeLetter[number];
-  }
-  return object;
-}
+//   for (number in object) {
+//     object[number].nickname = takeLetter[number];
+//   }
+//   return object;
+// }
 
-const result = createNickname(people);
+// const result = createNickname(people);
 
-console.log(result);
+// console.log(result);
 
 /* 
         1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
@@ -75,14 +75,30 @@ console.log(result);
     */
 
 //  DANE WEJŚCIOWE
-// const people = [
-//   {
-//     firstName: "Bartolomeo",
-//     lastName: "Lozano",
-//     nickname: "Rabona",
-//   },
-// ];
-// x;
+const people = [
+  {
+    firstName: "Bartolomeo",
+    lastName: "Lozano",
+    nickname: "Rabona",
+  },
+  {
+    firstName: "Mateo",
+    lastName: "Loza",
+    nickname: "Teoazo",
+  },
+];
+
+for (number in people) {
+  people[number].introduceYourself = function introduceYourself() {
+    const welcome = `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickname}`;
+    return welcome;
+  };
+}
+
+people.forEach((object) => console.log(object.introduceYourself()));
+
+console.log(people[0].introduceYourself());
+
 /* 
         2. 
         a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this wyświetli w konsoli tekst powitalny.
