@@ -95,9 +95,9 @@ for (number in people) {
   };
 }
 
-people.forEach((object) => console.log(object.introduceYourself()));
+// people.forEach((object) => console.log(object.introduceYourself()));
 
-console.log(people[0].introduceYourself());
+// console.log(people[0].introduceYourself());
 
 /* 
         2. 
@@ -125,17 +125,48 @@ console.log(people[0].introduceYourself());
         
     */
 
-//  DANE WEJŚCIOWE
-//   const people = [
-//     {
-//       firstName: "Bartolomeo",
-//       lastName: "Lozano",
-//       nickname: "Rabona",
-//       introduceYourself: "", // funkcja zamiast pustego stringa
-//     },
-//   ];
+//DANE WEJŚCIOWE
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//     nickname: "Rabona",
+//     introduceYourself: "", // funkcja zamiast pustego stringa
+//   },
+// ];
 
-//   const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
+const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
+
+for (number in people) {
+  people[number].getFavouriteColor = function getFavouriteColor(number) {
+    if (number >= 1 && number <= 30) {
+      colorIndex =
+        (this.firstName.length +
+          this.lastName.length +
+          this.nickname.length -
+          number) %
+        colors.length;
+
+      return colors[Math.abs(colorIndex)];
+    } else if (number === undefined) {
+      number = 5;
+      colorIndex =
+        (this.firstName.length +
+          this.lastName.length +
+          this.nickname.length -
+          number) %
+        colors.length;
+
+      return colors[Math.abs(colorIndex)];
+    } else if (number < 1) {
+      return "podałeś za małą liczbę, liczba nie może być mniejsza niż 1";
+    } else {
+      return "podałeś za dużą liczbę, liczba nie może być większa niż 30";
+    }
+  };
+}
+
+console.log(people[0].getFavouriteColor(5));
 
 /*
         3. 
@@ -152,6 +183,7 @@ console.log(people[0].introduceYourself());
     
         Dla powyższego przykładu i liczby 5 wprowadzonej w parametrze, powinniśmy uzyskać wynik:
         (22 - 5) % 6 = 5
+        22- 27
         console.log("orange")
     
         Hints
