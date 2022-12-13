@@ -137,36 +137,36 @@ for (number in people) {
 
 const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
 
-for (number in people) {
-  people[number].getFavouriteColor = function getFavouriteColor(number) {
-    if (number >= 1 && number <= 30) {
-      colorIndex =
-        (this.firstName.length +
-          this.lastName.length +
-          this.nickname.length -
-          number) %
-        colors.length;
+// for (number in people) {
+//   people[number].getFavouriteColor = function getFavouriteColor(number) {
+//     if (number >= 1 && number <= 30) {
+//       colorIndex =
+//         (this.firstName.length +
+//           this.lastName.length +
+//           this.nickname.length -
+//           number) %
+//         colors.length;
 
-      return colors[Math.abs(colorIndex)];
-    } else if (number === undefined) {
-      number = 5;
-      colorIndex =
-        (this.firstName.length +
-          this.lastName.length +
-          this.nickname.length -
-          number) %
-        colors.length;
+//       return colors[Math.abs(colorIndex)];
+//     } else if (number === undefined) {
+//       number = 5;
+//       colorIndex =
+//         (this.firstName.length +
+//           this.lastName.length +
+//           this.nickname.length -
+//           number) %
+//         colors.length;
 
-      return colors[Math.abs(colorIndex)];
-    } else if (number < 1) {
-      return "podałeś za małą liczbę, liczba nie może być mniejsza niż 1";
-    } else {
-      return "podałeś za dużą liczbę, liczba nie może być większa niż 30";
-    }
-  };
-}
+//       return colors[Math.abs(colorIndex)];
+//     } else if (number < 1) {
+//       return "podałeś za małą liczbę, liczba nie może być mniejsza niż 1";
+//     } else {
+//       return "podałeś za dużą liczbę, liczba nie może być większa niż 30";
+//     }
+//   };
+// }
 
-console.log(people[0].getFavouriteColor(5));
+//console.log(people[0].getFavouriteColor(5));
 
 /*
         3. 
@@ -199,6 +199,37 @@ console.log(people[0].getFavouriteColor(5));
         b) funkcja powinna wykonać dokładnie takie samo działanie jak poprzednia
         c) Za pomocą pętli for of przeiteruj po wszystkich osobach z tablicy i wyświetl ich ulubione kolory
     */
+
+function getFavouriteColor(number, index) {
+  if (number >= 1 && number <= 30) {
+    colorIndex =
+      (people[index].firstName.length +
+        people[index].lastName.length +
+        people[index].nickname.length -
+        number) %
+      colors.length;
+
+    return colors[Math.abs(colorIndex)];
+  } else if (number === undefined) {
+    number = 5;
+    colorIndex =
+      (people[index].firstName.length +
+        people[index].lastName.length +
+        people[index].nickname.length -
+        number) %
+      colors.length;
+
+    return colors[Math.abs(colorIndex)];
+  } else if (number < 1) {
+    return "podałeś za małą liczbę, liczba nie może być mniejsza niż 1";
+  } else {
+    return "podałeś za dużą liczbę, liczba nie może być większa niż 30";
+  }
+}
+
+const checkPerson = getFavouriteColor(5, 0);
+
+console.log(checkPerson);
 
 /*
         5. Zadanie polega na użyciu .filter() .map() .reduce w wersji łańcuchowej,
