@@ -158,6 +158,37 @@ for (i = 0; i < peopleWithNickname.length; i++) {
     c) Za pomocą pętli for of przeiteruj po wszystkich osobach z tablicy i wyświetl ich ulubione kolory
 */
 
+function getFavouriteColor2(number, firstName, lastName, nickName) {
+  const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
+  let num = number;
+  const letterCount = firstName.length + lastName.length + nickName.length;
+  let clrArrIndex;
+  let favoriteColor;
+  if (number > 30) {
+    console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30");
+  } else if (number < 1) {
+    console.log("podałeś za małą liczbę, liczba nie może być mniejsza niż 1");
+  } else if (number == null || number == undefined) {
+    num = 5;
+  }
+
+  if (num >= 1 && num <= 30) {
+    clrArrIndex = Math.abs(letterCount - num) % colors.length;
+    favoriteColor = colors[clrArrIndex];
+  }
+  return favoriteColor;
+}
+
+for (i of peopleWithNickname) {
+  console.log(
+    "Favorite color of",
+    i.firstName,
+    i.lastName,
+    "is",
+    getFavouriteColor2(colorNumber, i.firstName, i.lastName, i.nickName)
+  );
+}
+
 /*
     5. Zadanie polega na użyciu .filter() .map() .reduce w wersji łańcuchowej,
     czyli nie twórz nowych tablic w momencie wykonanie jednej z powyższych metod, połącz wykonanie ze sobą w jeden 
