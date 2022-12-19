@@ -36,6 +36,14 @@ const people = [
     firstName: "Mateo",
     lastName: "Loza",
   },
+  {
+    firstName: "Lozanna",
+    lastName: "Bartolomita",
+  },
+  {
+    firstName: "Arek",
+    lastName: "Milawicz",
+  },
 ];
 
 function nicknameRecomb(fName, lName) {
@@ -226,6 +234,65 @@ for (i of peopleWithNickname) {
     imię, którego chociaż jedna litera jest większa >= s
     g) posortuj tablicę alfabetycznie
 */
+function isPrime(n) {
+  if (n < 2) {
+    return false;
+  }
+  for (i = 2; i < n; i++) {
+    if (n % i === 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function peopleMixerFilter(element) {
+  let nicknameChecker = element["nickName"]
+    .split("")
+    .some((letter) => letter == "a");
+  const isElite = Math.round(Math.random() * 100);
+  if (
+    (element.firstName[element["firstName"].length - 1] == "a" ||
+      element.firstName[element["firstName"].length - 1] == "k") &&
+    element["lastName"].length > 6 &&
+    nicknameChecker == true
+  ) {
+    return element;
+  } else if (
+    isPrime(isElite) == true ||
+    (isElite % 3 === 0 && isElite % 5 === 0)
+  ) {
+    return element;
+  }
+}
+
+function keyValueSwapper(element) {
+  let newObject = {};
+  for (item in element) {
+    if (typeof element[item] == "function") {
+      continue;
+    } else {
+      newObject[element[item]] = item;
+    }
+  }
+  return newObject;
+}
+
+const peopleMixer = peopleWithNickname
+  .filter(peopleMixerFilter)
+  .map(keyValueSwapper)
+  .reduce((acc, next) => {
+    for (key in next) {
+      if (typeof next[key] == "function") {
+        continue;
+      } else {
+        acc[key] = next[key];
+      }
+    }
+    return acc;
+  }, {});
+
+console.log(peopleMixer);
 
 /*
     *6. Currying function
