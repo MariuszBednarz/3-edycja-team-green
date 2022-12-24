@@ -335,7 +335,7 @@ const filteredPeople = people
     return acc;
   }, {});
 
-//console.log(filteredPeople);
+///console.log(filteredPeople);
 
 /*
         *6. Currying function
@@ -351,6 +351,26 @@ const filteredPeople = people
         - funkcja może korzystać ze zmiennych i parametrów funkcji zewnętrznych (czyli tych w których się znajduje)
     */
 
+function multi(a) {
+  return function (b) {
+    return a * b;
+  };
+}
+const multiplyBySix = multi(6);
+// console.log(multi(5)(5));
+// console.log(multiplyBySix(10));
+
+function multiFourNumbers(a) {
+  return function (b) {
+    return function (c) {
+      return function (d) {
+        return a * b * c * d;
+      };
+    };
+  };
+}
+
+console.log(multiFourNumbers(2)(2)(2)(2));
 /*
         **7. Rekurencja
          a) Mając zagnieżdżony obiekt, wyciągnij z niego wszystkie imiona i dodaj do tablicy
