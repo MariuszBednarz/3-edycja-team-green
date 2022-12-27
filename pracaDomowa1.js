@@ -315,44 +315,119 @@ console.log(peopleMixer);
      Na przykład 'Kamil Bartek'
     INPUT:
 */
-// const nestedObject = {
-//   name: "Kamil",
-//   children: [
-//     {
-//       name: "Zosia",
-//     },
-//     {
-//       name: "Krysia",
-//       name2: "Barbara",
-//       children: [
-//         {
-//           name: "Basia",
-//           children: [
-//             {
-//               name: "Monika",
-//               name2: "Viola",
-//               children: [
-//                 {
-//                   name: "Mateusz",
-//                 },
-//                 {
-//                   name: "Sebastian",
-//                   name2: "August",
-//                   name3: "Franciszek",
-//                   children: [
-//                     { name: "Alex" },
-//                     { name: "Stasio" },
-//                     {
-//                       name: "Paulina",
-//                       children: [{ name: "Kuba" }, { name: "Kacper" }],
-//                     },
-//                   ],
-//                 },
-//               ],
-//             },
-//           ],
-//         },
-//       ],
-//     },
-//   ],
-// };
+const nestedObject = {
+  name: "Kamil",
+  children: [
+    {
+      name: "Zosia",
+    },
+    {
+      name: "Krysia",
+      name2: "Barbara",
+      children: [
+        {
+          name: "Basia",
+          children: [
+            {
+              name: "Monika",
+              name2: "Viola",
+              children: [
+                {
+                  name: "Mateusz",
+                },
+                {
+                  name: "Sebastian",
+                  name2: "August",
+                  name3: "Franciszek",
+                  children: [
+                    { name: "Alex" },
+                    { name: "Stasio" },
+                    {
+                      name: "Paulina",
+                      children: [{ name: "Kuba" }, { name: "Kacper" }],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+function arrayNoChildCheck(array) {
+  if (
+    array.every((element) => {
+      if (typeof element.children !== "object") {
+        return true;
+      } else {
+        return false;
+      }
+    }) == true
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function objectNoChildCheck(object) {
+  if (typeof object.children !== "object") {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function childrenRecursive(object) {
+  const newArray = [];
+  let fullName;
+  let filterChildren;
+  let filterParentName;
+  let filterNonParentName;
+  if (arrayNoChildCheck(object["children"]) == true) {
+    fullName = undefined;
+    fullName = object["children"].map((element) => {
+      return Object.values(element).join(" ");
+    }, "");
+    newArray.push(...fullName);
+    return newArray;
+  }
+  filterChildren = object["children"].filter((element) => {
+    if (objectNoChildCheck(element) == false) {
+      return element.children;
+    }
+  });
+  filterNonParentName = object["children"]
+    .filter((element) => {
+      if (objectNoChildCheck(element) == true) {
+        return element;
+      }
+    })
+    .map((element) => {
+      return Object.values(element).join(" ");
+    });
+  filterParentName = filterChildren.map((element) => {
+    return Object.values(element)
+      .filter((value) => typeof value !== "object")
+      .join(" ");
+  });
+  newArray.push(...filterParentName);
+  newArray.push(...filterNonParentName);
+  return newArray.concat(childrenRecursive(...filterChildren));
+}
+
+function fullObjectRecursive(object) {
+  const FirstParent = [
+    Object.values(object)
+      .filter((value) => typeof value !== "object")
+      .join(" "),
+  ];
+  const childrenNames = childrenRecursive(object);
+  return FirstParent.concat(childrenNames);
+}
+
+const newRecursedArray = fullObjectRecursive(nestedObject);
+console.log(newRecursedArray);
