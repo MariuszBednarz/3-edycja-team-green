@@ -308,6 +308,28 @@ console.log(peopleMixer);
     - funkcja może korzystać ze zmiennych i parametrów funkcji zewnętrznych (czyli tych w których się znajduje)
 */
 
+function multi1(n1) {
+  return function (n2) {
+    return n1 * n2;
+  };
+}
+
+console.log(multi1(5)(6));
+const multiplyBySix = multi1(6);
+console.log(multiplyBySix(10));
+
+function multi2(n1) {
+  return function (n2) {
+    return function (n3) {
+      return function (n4) {
+        return n1 * n2 * n3 * n4;
+      };
+    };
+  };
+}
+
+console.log(multi2(4)(5)(6)(10));
+
 /*
     **7. Rekurencja
      a) Mając zagnieżdżony obiekt, wyciągnij z niego wszystkie imiona i dodaj do tablicy
