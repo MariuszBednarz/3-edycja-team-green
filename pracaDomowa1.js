@@ -1,14 +1,27 @@
-//  DANE WEJŚCIOWE
+// //  DANE WEJŚCIOWE
 const people = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
   },
   {
-    firstName: "Mateo",
-    lastName: "Loza",
+    firstName: "Ma",
+    lastName: "Lo",
   },
 ];
+
+const nickname = people.map(obj => {
+  let nickname1 = obj.firstName.split('').slice(0,3).reverse().join('').toLowerCase();
+  const nickname2 = obj.lastName.split('').reverse().slice(0,3).join('').toLowerCase();
+  nickname1+= nickname2;
+  nicknameFinal = nickname1.charAt(0).toUpperCase() + nickname1.split('').slice(1,nickname1.length).join('')
+  obj.nickname = nicknameFinal
+  return obj
+})
+// console.log(nickname)
+
+
+
 
 /* 
     1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
@@ -40,18 +53,32 @@ const people = [
 */
 
 //  DANE WEJŚCIOWE
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-    nickname: "Rabona",
-  },
-];
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//     nickname: "Rabona",
+//   },
+// ];
+// Object.prototype.introduceYourself = introduceYourself
+function introduceYourself(){
+  return `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickname}`
+    }
 
+const newPeople =people.map(
+  person=>({
+  ...person,
+  introduceYourself,
+}))
+
+// console.log(newPeople)
+// console.log(people[1].introduceYourself())
+const forEachIntroduce = newPeople.forEach(function(item) {console.log (item.introduceYourself())})
 
 /* 
     2. 
-    a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this wyświetli w konsoli tekst powitalny.
+    a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this 
+    wyświetli w konsoli tekst powitalny.
     Oczywiście tekst powinien wyświetlić się dopiero po wywołaniu funkcji.
     Dla powyższego przykładu tekst powinien wyglądać w następujący sposób:
     "Cześć jestem Bartolomeo Lozano, ale w szkole mówią na mnie [Rabona]"
@@ -65,7 +92,8 @@ const people = [
         introduceYourself: // tutaj ma się znajdować funkcja
     },
 
-    b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu tablicy. W rezultacie na ekranie powinien
+    b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu tablicy.
+     W rezultacie na ekranie powinien
     pojawić się tekst powitalny dla każdej osoby w tablicy
 
     Hints:
@@ -76,16 +104,37 @@ const people = [
 */
 
 //  DANE WEJŚCIOWE
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-    nickname: "Rabona",
-    introduceYourself: "", // funkcja zamiast pustego stringa
-  },
-];
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//     nickname: "Rabona",
+//     introduceYourself: "", // funkcja zamiast pustego stringa
+//   },
+// ];
 
 const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
+Object.prototype.getFavouriteColor = getFavouriteColor
+
+function getFavouriteColor(number=5){
+  const length = this.firstName.length+ this.lastName.length + this.nickname.length
+  let resultMath = Math.abs((length -number)%6)
+  let result = ''
+  if(number<1){console.log('Podałeś za małą liczbę, liczba nie może być mniejsza niż 1')} else
+  if(number>30){'Podałeś za dużą liczbę, liczba nie może być większa niż 30'} else 
+  {for(i=0; i<colors.length; i++){
+    if(i == resultMath){result = colors[i]}
+  }}
+  return result
+}
+const newPeople2 =newPeople.map(
+  person=>({
+  ...person,
+  getFavouriteColor,
+}))
+
+ console.log(people[0].getFavouriteColor())
+ console.log(newPeople2)
 
 /*
     3. 
@@ -96,8 +145,8 @@ const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
         - podałeś za dużą liczbę, liczba nie może być większa niż 30
     d) w przypadku wywołania funkcji bez parametru, powinniśmy ustawić domyślną wartość na 5
     e) funkcja powinna zsumować wszystkie litery imienia, nazwiska i przezwiska, 
-    odjąć od tej sumy liczbę wprowadzoną w parametrze, a następnie za pomocą działania modulo (%) względem długości tablicy kolorów
-    wyznaczyć index
+    odjąć od tej sumy liczbę wprowadzoną w parametrze, a następnie za pomocą działania modulo (%) 
+    względem długości tablicy kolorów wyznaczyć index
     f) za pomocą indexu funkcja powinna wyciągnąć odpowiedni kolor z tablicy i wyświetlić go w konsoli.
 
     Dla powyższego przykładu i liczby 5 wprowadzonej w parametrze, powinniśmy uzyskać wynik:
@@ -111,12 +160,28 @@ const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
     dowoloną ilość kolorów
 */
 
+function favouriteColor(obj, number=5){
+  const length = obj[i].firstName.length + obj[i].lastName.length + obj[i].nickname.length
+  let resultMath = Math.abs((length -number)%6)
+  let result = ''
+  if(number<1){console.log('Podałeś za małą liczbę, liczba nie może być mniejsza niż 1')} else
+  if(number>30){'Podałeś za dużą liczbę, liczba nie może być większa niż 30'} else 
+  {for(i=0; i<colors.length; i++){
+    if(i == resultMath){result = colors[i]}
+  }}
+  return result
+}
+
+console.log(favouriteColor(people[1], 5,))
 /*
     4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
     a) funkcja powinna przyjąć 2 parametry (obiekt osoby i liczbę z zakresu 1 - 30)
     b) funkcja powinna wykonać dokładnie takie samo działanie jak poprzednia
     c) Za pomocą pętli for of przeiteruj po wszystkich osobach z tablicy i wyświetl ich ulubione kolory
 */
+
+
+
 
 /*
     5. Zadanie polega na użyciu .filter() .map() .reduce w wersji łańcuchowej,
