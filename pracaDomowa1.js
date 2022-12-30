@@ -5,19 +5,49 @@ const people = [
     lastName: "Lozano",
   },
   {
+    firstName: "Majk",
+    lastName: "Lodarno",
+  },
+  {
     firstName: "Ma",
     lastName: "Lo",
   },
+  {
+    firstName: "Moziaka",
+    lastName: "Kapolal",
+  },
+  {
+    firstName: "Pawel",
+    lastName: "Drabato",
+  },
 ];
 
-const nickname = people.map(obj => {
-  let nickname1 = obj.firstName.split('').slice(0,3).reverse().join('').toLowerCase();
-  const nickname2 = obj.lastName.split('').reverse().slice(0,3).join('').toLowerCase();
-  nickname1+= nickname2;
-  nicknameFinal = nickname1.charAt(0).toUpperCase() + nickname1.split('').slice(1,nickname1.length).join('')
-  obj.nickname = nicknameFinal
-  return obj
-})
+function nickname(person){
+  let nickname = person.firstName.split('').slice(0,3).reverse().join('').toLowerCase();
+  const nickname2 = person.lastName.split('').reverse().slice(0,3).join('').toLowerCase();
+  nickname+= nickname2;
+  nickname = nickname.charAt(0).toUpperCase() + nickname.split('').slice(1,nickname.length).join('')
+  // person.nickname = nickname
+  return {
+    ...person,
+    nickname,
+}
+}
+
+const newPeople =people.map((nickname))
+
+console.log(newPeople)
+// console.log(people.map(nickname))
+
+
+// const nickname = people.map(obj => {
+//   let nickname1 = obj.firstName.split('').slice(0,3).reverse().join('').toLowerCase();
+//   const nickname2 = obj.lastName.split('').reverse().slice(0,3).join('').toLowerCase();
+//   nickname1+= nickname2;
+//   nicknameFinal = nickname1.charAt(0).toUpperCase() + nickname1.split('').slice(1,nickname1.length).join('')
+//   obj.nickname = nicknameFinal
+//   return obj
+// })
 // console.log(nickname)
 
 
@@ -60,20 +90,20 @@ const nickname = people.map(obj => {
 //     nickname: "Rabona",
 //   },
 // ];
-// Object.prototype.introduceYourself = introduceYourself
+
 function introduceYourself(){
   return `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickname}`
     }
 
-const newPeople =people.map(
+const newPeopleFn =newPeople.map(
   person=>({
   ...person,
   introduceYourself,
 }))
 
-// console.log(newPeople)
-// console.log(people[1].introduceYourself())
-const forEachIntroduce = newPeople.forEach(function(item) {console.log (item.introduceYourself())})
+console.log(newPeopleFn)
+// // console.log(people[1].introduceYourself())
+const forEachIntroduce = newPeopleFn.forEach(function(item) {console.log (item.introduceYourself())})
 
 /* 
     2. 
@@ -114,26 +144,26 @@ const forEachIntroduce = newPeople.forEach(function(item) {console.log (item.int
 // ];
 
 const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
-Object.prototype.getFavouriteColor = getFavouriteColor
+
 
 function getFavouriteColor(number=5){
   const length = this.firstName.length+ this.lastName.length + this.nickname.length
   let resultMath = Math.abs((length -number)%6)
   let result = ''
   if(number<1){console.log('Podałeś za małą liczbę, liczba nie może być mniejsza niż 1')} else
-  if(number>30){'Podałeś za dużą liczbę, liczba nie może być większa niż 30'} else 
+  if(number>30){console.log('Podałeś za dużą liczbę, liczba nie może być większa niż 30')} else 
   {for(i=0; i<colors.length; i++){
     if(i == resultMath){result = colors[i]}
   }}
   return result
 }
-const newPeople2 =newPeople.map(
+const newPeople2 =newPeopleFn.map(
   person=>({
   ...person,
   getFavouriteColor,
 }))
 
- console.log(people[0].getFavouriteColor())
+//  console.log(newPeople2[0].getFavouriteColor())
  console.log(newPeople2)
 
 /*
@@ -160,8 +190,8 @@ const newPeople2 =newPeople.map(
     dowoloną ilość kolorów
 */
 
-function favouriteColor(obj, number=5){
-  const length = obj[i].firstName.length + obj[i].lastName.length + obj[i].nickname.length
+function favouriteColor(person, number=5){
+  const length = person.firstName.length + person.lastName.length + person.nickname.length
   let resultMath = Math.abs((length -number)%6)
   let result = ''
   if(number<1){console.log('Podałeś za małą liczbę, liczba nie może być mniejsza niż 1')} else
@@ -172,7 +202,11 @@ function favouriteColor(obj, number=5){
   return result
 }
 
-console.log(favouriteColor(people[1], 5,))
+for(let person of newPeople){
+  console.log(favouriteColor(person, 5,))
+}
+
+// console.log(favouriteColor(people[1], 5,))
 /*
     4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
     a) funkcja powinna przyjąć 2 parametry (obiekt osoby i liczbę z zakresu 1 - 30)
@@ -181,7 +215,29 @@ console.log(favouriteColor(people[1], 5,))
 */
 
 
+const mappedPeople = newPeople.filter(person=> { 
+const nick = person.nickname.split('').includes('a')
+const last = person.lastName.length > 6
+const name = person.firstName[person.firstName.length-1] == 'a'
+const name1 = person.firstName[person.firstName.length-1] == 'k'
+const number=Math.floor(Math.random()*100)
+let isElite = true
+if(number<2) return false
+    for (i = 2; i < number; i++) {
+        if (number % i === 0)  {
+            isElite = false
+        }
+        isElite
+    }
+    console.log('isElite', isElite)
+if(isElite == false){
+  return nick && last && name || name1
+}
+return newPeople
 
+
+}).map()
+console.log(mappedPeople)
 
 /*
     5. Zadanie polega na użyciu .filter() .map() .reduce w wersji łańcuchowej,
