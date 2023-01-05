@@ -28,6 +28,10 @@ const people = [
   },
 ];
 
+//----------------------------
+//fajnie by było spróbować dodać funkcje introduceYourself i getFavouriteColor za pomocą logiki, dodając do obiektu źródłowego, a nie wpisywać ręcznie
+//----------------------------
+
 //ZAD. 1
 
 function mapFunction(person) {
@@ -93,6 +97,10 @@ for (i = 0; i < result.length; i++) {
   );
 }
 //ZAD. 4 ?? - podobne do zadania 3.
+
+//----------------------------
+//funkcja getFavouriteColor powinna iterować po tablicy, przyjmować obiekt osoby i numer w zadaniu 4, natomiast w zadaniu 3 ta funkcja powinna być dodana jako metoda w obiekcie i wywołana
+//----------------------------
 
 //ZAD. 5
 
@@ -219,6 +227,10 @@ const nestedObject = {
 };
 
 // 7 (a) (b)
+
+//----------------------------
+//Ta funkcja nie do końca działa jak powinna. Zwraca imiona kilkukrotnie. "Kamil" w obiekcie wystepuje 1 raz, a w konsoli jest wyświetlony kilkukrotnie
+//----------------------------
 
 function allName(arrayNames, newAr) {
   let cuestB = [];
