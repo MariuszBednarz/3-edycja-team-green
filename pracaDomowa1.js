@@ -69,6 +69,8 @@ const peopleWithNickname = people.map((element) => ({
   nickName: nicknameRecomb(element.firstName, element.lastName),
 }));
 
+console.log(peopleWithNickname)
+
 /* 
     2. 
     a) Do każdego obiektu dodaj funkcję introduceYourself, która za pomocą słówka this wyświetli w konsoli tekst powitalny.
@@ -100,9 +102,8 @@ Object.prototype.introduceyourself = function introduceyourself() {
 };
 
 for (i = 0; i < peopleWithNickname.length; i++) {
-  console.log(peopleWithNickname[i].introduceyourself());
+  console.log("dodanie", peopleWithNickname[i].introduceyourself());
 }
-
 /*
     3. 
     a) Dodaj do każdego obiektu funkcję getFavouriteColor
@@ -159,12 +160,31 @@ for (i = 0; i < peopleWithNickname.length; i++) {
     peopleWithNickname[i].getFavouriteColor(colorNumber)
   );
 }
+
+
+//----------------------
+//zastanawia mnie ta konstrukcja Object.prototype.funkcja itp.
+//spróbuj zrobić tak, żeby stworzyć i wykonsolować obiekty z ludźmi, które będą zawierały w sobie funkcje, tak jak poniżej:
+// {
+//   firstName: "Bartolomeo",
+//   lastName: "Lozano",
+//   nickname: "Rabona",
+//   introduceYourself: // tutaj ma się znajdować funkcja
+//   getFavouriteColor: // jw.
+// },
+//----------------------
+
 /*
     4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
     a) funkcja powinna przyjąć 2 parametry (obiekt osoby i liczbę z zakresu 1 - 30)
     b) funkcja powinna wykonać dokładnie takie samo działanie jak poprzednia
     c) Za pomocą pętli for of przeiteruj po wszystkich osobach z tablicy i wyświetl ich ulubione kolory
 */
+
+
+//----------------------
+// funkcja poniżej przyjmuje 4 parametry zamiast dwóch, spróbuj napisać to tak, aby f-cja przyjmowała np. (person, number), w środku możesz użyć destrukturyzacji aby dobrać się do wartości obiektu
+//----------------------
 
 function getFavouriteColor2(number, firstName, lastName, nickName) {
   const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
@@ -249,9 +269,15 @@ function isPrime(n) {
 function peopleMixerFilter(element) {
   let nicknameChecker = element["nickName"]
     .split("")
+//----------------------
+// można użyć metody includes(), ale tak też jest ok
+//----------------------
     .some((letter) => letter == "a");
   const isElite = Math.round(Math.random() * 100);
   if (
+//----------------------
+// można użyć metody endsWith() w tych stringach żeby sprawdzic czym się kończy string
+//----------------------
     (element.firstName[element["firstName"].length - 1] == "a" ||
       element.firstName[element["firstName"].length - 1] == "k") &&
     element["lastName"].length > 6 &&
