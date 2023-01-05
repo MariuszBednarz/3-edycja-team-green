@@ -3,6 +3,7 @@ const people = [
   {
     firstName: "Bartolomeo",
     lastName: "Lozano",
+    introduceYourself,
   },
   {
     firstName: "Majk",
@@ -36,7 +37,7 @@ function nickname(person){
 
 const newPeople =people.map((nickname))
 
-console.log(newPeople)
+// console.log(newPeople)
 // console.log(people.map(nickname))
 
 
@@ -101,9 +102,9 @@ const newPeopleFn =newPeople.map(
   introduceYourself,
 }))
 
-console.log(newPeopleFn)
-// // console.log(people[1].introduceYourself())
-const forEachIntroduce = newPeopleFn.forEach(function(item) {console.log (item.introduceYourself())})
+// console.log(newPeopleFn)
+// // // console.log(people[1].introduceYourself())
+// const forEachIntroduce = newPeopleFn.forEach(function(item) {console.log (item.introduceYourself())})
 
 /* 
     2. 
@@ -164,7 +165,7 @@ const newPeople2 =newPeopleFn.map(
 }))
 
 //  console.log(newPeople2[0].getFavouriteColor())
- console.log(newPeople2)
+//  console.log(newPeople2)
 
 /*
     3. 
@@ -202,9 +203,9 @@ function favouriteColor(person, number=5){
   return result
 }
 
-for(let person of newPeople){
-  console.log(favouriteColor(person, 5,))
-}
+// for(let person of newPeople){
+  // console.log(favouriteColor(person, 5,))
+// }
 
 // console.log(favouriteColor(people[1], 5,))
 /*
@@ -220,23 +221,43 @@ const nick = person.nickname.split('').includes('a')
 const last = person.lastName.length > 6
 const name = person.firstName[person.firstName.length-1] == 'a'
 const name1 = person.firstName[person.firstName.length-1] == 'k'
-const number=Math.floor(Math.random()*100)
+const number=7
+// Math.floor(Math.random()*100)
 let isElite = true
-if(number<2) return false
-    for (i = 2; i < number; i++) {
-        if (number % i === 0)  {
-            isElite = false
-        }
-        isElite
+function isPrimeNumber( number){
+  if(number<2) return false
+      for (i = 2; i < number; i++) {
+          if (number % i === 0)  {
+              return false
+          }
+          return true
+      }}
+  function isDivisibleBy3And5 (number){
+    if(number % 3 === 0 && number % 5 === 0){
+      return true
     }
-    console.log('isElite', isElite)
-if(isElite == false){
-  return nick && last && name || name1
+    return false
+  }
+ 
+if(isPrimeNumber(number) || isDivisibleBy3And5(number)){
+  return newPeople
 }
-return newPeople
+return nick && last && name || name1
 
-
-}).map()
+}).map(item=>{
+  
+  const result = {}
+  for(let key in item){
+    if(!['getFavouriteColor','introduceYourself'].includes(key)){
+      result[item[key]] = key
+      }}
+  return result
+}).reduce((acc, next) =>{
+// console.log('acc', acc)
+// console.log('next', next)
+  return {...acc, ...next}
+  }
+,{})
 console.log(mappedPeople)
 
 /*
