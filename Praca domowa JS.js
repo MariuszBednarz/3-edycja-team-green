@@ -8,7 +8,7 @@
                 d) Jeżeli liczba znaków w imieniu bądź nazwisku jest mniejsza niż 3, nickname będzie odpowiednio krótszy 
                 e) rozważcie wszystkie skrajne przypadki, ponieważ Waszą funkcję mapującą wrzucimy do testów na platformie
                 e) Have fun :)
-                /*
+                 */
 
 const people = [
     {
@@ -51,7 +51,7 @@ let result = peopleMapped;
                       Dla powyższego przykładu tekst powinien wyglądać w następujący sposób:
                       "Cześć jestem Bartolomeo Lozano, ale w szkole mówią na mnie [Rabona]"
                       Natomiast wywołanie funkcji: people[0].introduceYourself()
-                  /*
+                   */
   const people1 = [
     {
       firstName: "Bartolomeo",
@@ -81,11 +81,11 @@ let result = peopleMapped;
   ];
 
   console.log(people1)
-
-b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu tablicy. W rezultacie na ekranie powinien
-    pojawić się tekst powitalny dla każdej osoby w tablicy
-    Hints:
-
+                     /* 
+                    b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu tablicy. W rezultacie na ekranie powinien
+                        pojawić się tekst powitalny dla każdej osoby w tablicy
+                        Hints:
+                     /* 
 
   let newArray = people1.forEach(function(item) {
     console.log(`Cześć jestem ${item.firstName} ${item.lastName}, ale w szkole mówią na mnie ${item.nickname}.`)
@@ -104,7 +104,7 @@ b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu
                         odjąć od tej sumy liczbę wprowadzoną w parametrze, a następnie za pomocą działania modulo (%) względem długości tablicy kolorów
                         wyznaczyć index
                         f) za pomocą indexu funkcja powinna wyciągnąć odpowiedni kolor z tablicy i wyświetlić go w konsoli.
-                        /*
+                         */
 
     
     
@@ -243,7 +243,7 @@ b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu
                   wszystkich obiektów z tablicy, dzięki temu, że w punkcie d) odwrócilismy klucze z wartościami, nie będzie 
                   z tym problemu :)
                   g) posortuj tablicę alfabetycznie
-              /*
+              */
 
 
       const people1 = [
@@ -310,9 +310,9 @@ b) za pomocą pętli forEach, wywołaj funkcję powitalną dla każdego elementu
               
         ,
       ];
-      // const colors = ["red", "green", "yellow", "blue", "pink", "orange", "purple", "mint", "sea"];
+      const colors = ["red", "green", "yellow", "blue", "pink", "orange", "purple", "mint", "sea"];
 
-      // console.log(people1)
+       console.log(people1)
 
 
 const newArray1 = people1.filter(function(item) {
@@ -377,7 +377,7 @@ console.log(newArray)
                         multiplyBySix(10)
                       b) Analogicznie napisz funkcję, która mnoży 4 liczby i możliwe jest wywołanie
                       - multi(4)(5)(6)(10)
-                  /*
+                   */
 
 const sum =(a) => {
     return (b) => {
@@ -405,7 +405,7 @@ const sum =(a) => {
                 a) Mając zagnieżdżony obiekt, wyciągnij z niego wszystkie imiona i dodaj do tablicy
                 ***b) Jeżeli osoba ma więcej niż jedno imię, te imiona powinny znajdować się w jednym stringu w tablicy
                 Na przykład 'Kamil Bartek'
-                /*
+                */
 
 
 const nestedObject = {
