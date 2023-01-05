@@ -24,35 +24,35 @@ let people = [
     lastName: "Loz",
   },
 
-  
 ];
 
-people = people.map(function(person) {
-  
+people = people.map(function (person) {
+
   let firstSliceLength = 3;
 
   if (person.firstName.length < 3) firstSliceLength = 2;
-  if (person.firstName.length < 2 && person.firstName.length >= 1 ) firstSliceLength = 1;
+  if (person.firstName.length < 2 && person.firstName.length >= 1) firstSliceLength = 1;
   if (person.firstName.length < 1) firstSliceLength = 0;
 
-  let SecondSliceLength = 3;
-  if (person.lastName.length < 3) SecondSliceLength = 2;
-  if (person.lastName.length < 2 && person.lastName.length >= 1 ) SecondSliceLength = 1;
-  if (person.lastName.length < 1) SecondSliceLength = 0;
+  //zmienna z małej litery :)
+  let secondSliceLength = 3;
+  if (person.lastName.length < 3) secondSliceLength = 2;
+  if (person.lastName.length < 2 && person.lastName.length >= 1) secondSliceLength = 1;
+  if (person.lastName.length < 1) secondSliceLength = 0;
 
 
-  let nickname = person.firstName.toLowerCase().split("").slice(0,firstSliceLength).reverse().join("") +
-  person.lastName.toLowerCase().slice(-SecondSliceLength).split("").reverse().join("");
+  let nickname = person.firstName.toLowerCase().split("").slice(0, firstSliceLength).reverse().join("") +
+    person.lastName.toLowerCase().slice(-secondSliceLength).split("").reverse().join("");
   nickname = nickname[0].toUpperCase() + nickname.slice(1);
 
   return {
     ...person,
-    nickname 
-        } 
+    nickname
+  }
 
 });
 
-console.log("ZADANIE 1 - DODANIE NICKNAMES =>",people); 
+console.log("ZADANIE 1 - DODANIE NICKNAMES =>", people);
 
 // -----------------------------------------------------------------------------------------------------------------------------
 
@@ -78,7 +78,7 @@ console.log("ZADANIE 1 - DODANIE NICKNAMES =>",people);
 // ************************************************************************************
 
 function introduceYourself() {
-  
+
   console.log(`Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickname}`);
 }
 
@@ -86,10 +86,10 @@ people = people.map((person) => {
   return {
     ...person,
     introduceYourself
-        }
+  }
 });
 console.log("ZADANIE 2 - DODANIE FUNKCJI =>");
-people.forEach(function(person) { person.introduceYourself();  });
+people.forEach(function (person) { person.introduceYourself(); });
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -117,24 +117,24 @@ people.forEach(function(person) { person.introduceYourself();  });
 const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
 
 function getFavouriteColor(number = 5) {
- if (number <= 1) console.log("podałeś za małą liczbę, liczba nie może być mniejsza niż 1");
- else if (number >= 30) console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30")
- const index = Math.abs((this.firstName.length + this.lastName.length + this.nickname.length - number) % colors.length);
- 
- return console.log(colors[index]);
-};
-  
- people = people.map((person) => {
-   return {
-     ...person,
-     introduceYourself,
-     getFavouriteColor,
+  if (number <= 1) console.log("podałeś za małą liczbę, liczba nie może być mniejsza niż 1");
+  else if (number >= 30) console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30")
+  const index = Math.abs((this.firstName.length + this.lastName.length + this.nickname.length - number) % colors.length);
 
-   }
- })
- console.log("ZADANIE 3 - DODANIE FUNKCJI KOLOR =>");
- people.forEach(function (person) { return person.getFavouriteColor()});    
- console.log(people);
+  return console.log(colors[index]);
+};
+
+people = people.map((person) => {
+  return {
+    ...person,
+    introduceYourself,
+    getFavouriteColor,
+
+  }
+})
+console.log("ZADANIE 3 - DODANIE FUNKCJI KOLOR =>");
+people.forEach(function (person) { return person.getFavouriteColor() });
+console.log(people);
 //-----------------------------------------------------------------------------------------------------------------------------
 
 // 4. Napisz funkcję analogiczną do funkcji z zadania 3, ale nie dodawaj jej w obiekcie.
@@ -158,16 +158,16 @@ function getFavouriteColor(number = 5) {
 
 function getFavouriteColorv2(person, num = 5) {
 
-if (num <= 1) console.log("podałeś za małą liczbę, liczba nie może być mniejsza niż 1");
-else if (num >= 30) console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30");
-else {
+  if (num <= 1) console.log("podałeś za małą liczbę, liczba nie może być mniejsza niż 1");
+  else if (num >= 30) console.log("podałeś za dużą liczbę, liczba nie może być większa niż 30");
+  else {
 
-for(let item of person) {
-  
-const index = Math.abs((item.firstName.length + item.lastName.length + item.nickname.length  - num) % colors.length);
-console.log(colors[index]);
-}
-}
+    for (let item of person) {
+
+      const index = Math.abs((item.firstName.length + item.lastName.length + item.nickname.length - num) % colors.length);
+      console.log(colors[index]);
+    }
+  }
 
 };
 console.log("ZADANIE 4 - DODANIE FUNKCJI KOLOR V2 =>")
@@ -226,89 +226,88 @@ getFavouriteColorv2(people, num = 5);
 //   ];
 
 console.log("ZADANIE 5 =>")
-  let number = Math.round(Math.random() * 100);
-  let isElite = true;
-  let checkPrime = true;
-  //Check if number is Prime
-  for(let i = 2; i < number; i++){
-    if(number%i == 0){
-        checkPrime = false;
-        break;
-    } 
+let number = Math.round(Math.random() * 100);
+let isElite = true;
+let checkPrime = true;
+//Check if number is Prime
+for (let i = 2; i < number; i++) {
+  if (number % i == 0) {
+    checkPrime = false;
+    break;
+  }
 }
- //Setting isElite value  
-    if(number % 3 === 0 && number % 2 === 0) isElite = true;
-    if(number <= 1) isElite = false; 
-    else if(!checkPrime)  isElite = false; 
-   
- 
-  const result = people.filter((person) => {
+//Setting isElite value  
+if (number % 3 === 0 && number % 2 === 0) isElite = true;
+if (number <= 1) isElite = false;
+else if (!checkPrime) isElite = false;
 
-    if(isElite === true) {
-      if(
+
+const result = people.filter((person) => {
+
+  if (isElite === true) {
+    if (
       person.lastName.length > 6 &&
-      person.nickname.toLowerCase().includes('a')) {return true;}
-   {return false}
-    } else {
-      if(['a','k'].includes(person.firstName.slice(-1)) &&
+      person.nickname.toLowerCase().includes('a')) { return true; }
+    { return false }
+  } else {
+    //można użyć też metody endsWith();
+    if (['a', 'k'].includes(person.firstName.slice(-1)) &&
       person.lastName.length > 6 &&
-      person.nickname.toLowerCase().includes('a')) {return true;}
-   {return false}
-    }
-   
-  })
+      person.nickname.toLowerCase().includes('a')) { return true; }
+    { return false }
+  }
+
+})
   .map((person) => {
     const swapped = {};
-    for(key in person) {
-
-      if(("getFavouriteColor") !== key && ("introduceYourself") !== key )     
-      swapped[person[key]] = key;
+    for (key in person) {
+      if (("getFavouriteColor") !== key && ("introduceYourself") !== key)
+        swapped[person[key]] = key;
     }
-    
     return swapped;
   })
   .reduce((acc, val) => {
-    for(key in val) {
+    for (key in val) {
       acc[key] = val[key];
     }
     return acc;
-  },{});
-  console.log(result); 
+  }, {});
+
+console.log(result);
 
 
 let newResult = [];
 
 
 // PODPUNKT F => 
-for(key in result) {
-  if(['lastName', 'nickname'].includes(result[key])) { //  ZAWIERA NAZWISKA/NICKNAME GDZIE CHOCIAZ 1 LITERA JEST  < S
-    for(let i = 0; i < key.length; i++)
-    {
- 
-      if((((key[i]).toLowerCase()).charCodeAt(0)) < 115) {
+for (key in result) {
+  if (['lastName', 'nickname'].includes(result[key])) { //  ZAWIERA NAZWISKA/NICKNAME GDZIE CHOCIAZ 1 LITERA JEST  < S
+    for (let i = 0; i < key.length; i++) {
+
+      if ((((key[i]).toLowerCase()).charCodeAt(0)) < 115) {
         break;
       }
-     
+
     }
-  newResult.push(key);};
-  if(result[key] == 'firstName') { // IMIĘ, KTÓREGO CHOCIAZ JEDNA LITERA JEST WIĘKSZA OD S
-    for(let i = 0; i < key.length; i++)
-    {
-      
-      if((((key[i]).toLowerCase()).charCodeAt(0)) >= 115) {
-        
+    newResult.push(key);
+  };
+  if (result[key] == 'firstName') { // IMIĘ, KTÓREGO CHOCIAZ JEDNA LITERA JEST WIĘKSZA OD S
+    for (let i = 0; i < key.length; i++) {
+
+      if ((((key[i]).toLowerCase()).charCodeAt(0)) >= 115) {
+
         newResult.push(key);
         break;
       }
-     
-    }
-  
 
-}
+    }
+
+
+  }
 };
 newResult.sort();
-console.log(newResult);
- 
+console.log("result", newResult);
+
 
 //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -326,23 +325,24 @@ console.log(newResult);
 
 // ************************************************************************************
 
-  function multi (a){
-    return function(b) {
-      return a * b;
+function multi(a) {
+  return function (b) {
+    return a * b;
+  }
+}
+const multiplyBySix = multi(6);
+console.log("ZADANIE 6 WERSJA 1 =>", multi(5)(6), multiplyBySix(10));
+const multiv2 = (a) => {
+  return (b) => {
+    return (c) => {
+      return (d) => {
+        return a * b * c * d
+      }
     }
   }
-  const multiplyBySix = multi(6);
-  console.log("ZADANIE 6 WERSJA 1 =>", multi(5)(6),multiplyBySix(10));
-  const multiv2 =(a) => {
-    return (b) => {
-       return (c) => {
-          return (d) => {
-             return a*b*c*d
-          }
-} }
 }
 
-console.log("ZADANIE 6 WERSJA 2 =>", multiv2(4)(5)(6)(10))  
+console.log("ZADANIE 6 WERSJA 2 =>", multiv2(4)(5)(6)(10))
 
 //-----------------------------------------------------------------------------------------------------------------------------
 // **7. Rekurencja
@@ -353,47 +353,47 @@ console.log("ZADANIE 6 WERSJA 2 =>", multiv2(4)(5)(6)(10))
 // ************************************************************************************
 
 
- 
-  const nestedObject = {
-name: "Kamil",
-children: [
-  {
-    name: "Zosia",
-  },
-  {
-    name: "Krysia",
-    name2: "Barbara",
-    children: [
-      {
-        name: "Basia",
-        children: [
-          {
-            name: "Monika",
-            name2: "Viola",
-            children: [
-              {
-                name: "Mateusz",
-              },
-              {
-                name: "Sebastian",
-                name2: "August",
-                name3: "Franciszek",
-                children: [
-                  { name: "Alex" },
-                  { name: "Stasio" },
-                  {
-                    name: "Paulina",
-                    children: [{ name: "Kuba" }, { name: "Kacper" }],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-],
+
+const nestedObject = {
+  name: "Kamil",
+  children: [
+    {
+      name: "Zosia",
+    },
+    {
+      name: "Krysia",
+      name2: "Barbara",
+      children: [
+        {
+          name: "Basia",
+          children: [
+            {
+              name: "Monika",
+              name2: "Viola",
+              children: [
+                {
+                  name: "Mateusz",
+                },
+                {
+                  name: "Sebastian",
+                  name2: "August",
+                  name3: "Franciszek",
+                  children: [
+                    { name: "Alex" },
+                    { name: "Stasio" },
+                    {
+                      name: "Paulina",
+                      children: [{ name: "Kuba" }, { name: "Kacper" }],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };
 
 //  A ************************************************************************************
@@ -401,21 +401,21 @@ children: [
 const resultsv3 = [];
 let searchNames = (obj, searchPhrase, searchPhrase2, searchPhrase3) => {
 
-Object.keys(obj).forEach((key) => {
-let searchingValue = obj[key];
+  Object.keys(obj).forEach((key) => {
+    let searchingValue = obj[key];
 
-if((key === searchPhrase || key === searchPhrase2 || key ===searchPhrase3) && typeof searchingValue !== 'object') {
-  resultsv3.push(searchingValue);
-} else if (typeof searchingValue === 'object') {
-  searchNames(searchingValue , searchPhrase, searchPhrase2, searchPhrase3);
-}
-});
-return resultsv3;
+    if ((key === searchPhrase || key === searchPhrase2 || key === searchPhrase3) && typeof searchingValue !== 'object') {
+      resultsv3.push(searchingValue);
+    } else if (typeof searchingValue === 'object') {
+      searchNames(searchingValue, searchPhrase, searchPhrase2, searchPhrase3);
+    }
+  });
+  return resultsv3;
 
 };
 
 searchNames(nestedObject, 'name', 'name2', 'name3');
-console.log("ZADANIE 7A TABLICA Z IMIONAMI =>", resultsv3);  
+console.log("ZADANIE 7A TABLICA Z IMIONAMI =>", resultsv3);
 
 //  B ************************************************************************************
 
@@ -426,32 +426,31 @@ let name3index = [];
 const results = [];
 searchNames = (obj, searchPhrase, searchPhrase2, searchPhrase3) => {
 
-Object.keys(obj).forEach((key, index) => {
-  let searchingValue = obj[key];
+  Object.keys(obj).forEach((key, index) => {
+    let searchingValue = obj[key];
 
 
-  if((key === searchPhrase || key === searchPhrase2 || key ===searchPhrase3) && typeof searchingValue !== 'object') { id++;
-    if(key === 'name2')
-  {
-   name2index.push(id-1);
-   results.push(searchingValue);
-  
-  }
-  else if(key === 'name3')
-  {
-   name3index.push(id-1);
-   results.push(searchingValue);
-  
-  }
-  else results.push(searchingValue)
-   
-  } else if (typeof searchingValue === 'object') {
-    searchNames(searchingValue , searchPhrase, searchPhrase2, searchPhrase3);
-  }
-});
-return results;
+    if ((key === searchPhrase || key === searchPhrase2 || key === searchPhrase3) && typeof searchingValue !== 'object') {
+      id++;
+      if (key === 'name2') {
+        name2index.push(id - 1);
+        results.push(searchingValue);
 
- };
+      }
+      else if (key === 'name3') {
+        name3index.push(id - 1);
+        results.push(searchingValue);
+
+      }
+      else results.push(searchingValue)
+
+    } else if (typeof searchingValue === 'object') {
+      searchNames(searchingValue, searchPhrase, searchPhrase2, searchPhrase3);
+    }
+  });
+  return results;
+
+};
 
 searchNames(nestedObject, 'name', 'name2', 'name3');
 
@@ -459,33 +458,36 @@ searchNames(nestedObject, 'name', 'name2', 'name3');
 let arrAllNames = [];
 
 results.map((el, index) => {
-  
-    
-    if(name2index.includes(index)) {
 
-     arrAllNames.pop();
-     el = results[index -1] + " " + results[index];
-     return  arrAllNames.push(el)
-    }
+  if (name2index.includes(index)) {
 
-    else if(name3index.includes(index)) {
+    arrAllNames.pop();
+    el = results[index - 1] + " " + results[index];
+    return arrAllNames.push(el)
+  }
 
-      arrAllNames.pop();
-      el = results[index -2] + " " + results[index -1] + " " + results[index];
-      return  arrAllNames.push(el)
-     }
+  else if (name3index.includes(index)) {
 
-    else {
+    arrAllNames.pop();
+    el = results[index - 2] + " " + results[index - 1] + " " + results[index];
 
-      return arrAllNames.push(el)
+    //tradycyjna konkatenacja jest ok, ale też można użyć template string np:
+    // el = `${results[index - 2]} ${results[index - 1]} ${results[index]}`
 
-    }
-  
+    return arrAllNames.push(el)
+  }
+
+  else {
+
+    return arrAllNames.push(el)
+
+  }
+
 });
 
 
-//console.log(results);
-//console.log(name2index);
+// console.log(results);
+// console.log(name2index);
 console.log("ZADANIE 7B, KILKA IMION W 1 STRINGU", arrAllNames);
 
 
