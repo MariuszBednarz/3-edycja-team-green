@@ -24,7 +24,7 @@ const people = [
 
 //  DANE WEJŚCIOWE
 
-//const people = [
+// const people = [
 //   {
 //     firstName: "Bartolomeo",
 //     lastName: "Lozano",
@@ -32,7 +32,7 @@ const people = [
 //   {
 //     firstName: "Mateo",
 //     lastName: "Loza",
-//   },
+//   }
 // ];
 function createNickname(object) {
   const takeLetter = object.map((a, index) => {
@@ -66,7 +66,12 @@ function createNickname(object) {
 
 const result = createNickname(people);
 
-//console.log(result);
+// console.log(result);
+
+//------------------------
+//REVIEW: 1. spokojnie można użyć slice() zamiast substr(), to przestarzała metoda. Poza tym działa!
+//------------------------
+
 
 /* 
         1. Napisz funkcję mapującą, która utworzy klucz(właściwość) nickname na każdej osobie w tablicy w następujący sposób:
@@ -118,9 +123,16 @@ for (number in people) {
   };
 }
 
-//people.forEach((object) => console.log(object.introduceYourself()));
+// people.forEach((object) => console.log(object.introduceYourself()));
 
 // console.log(people[0].introduceYourself());
+
+// console.log(people)
+
+//------------------------
+//REVIEW: 2. jest ok!
+//------------------------
+
 
 /* 
         2. 
@@ -189,7 +201,15 @@ for (number in people) {
   };
 }
 
-//console.log(people[0].getFavouriteColor(5));
+// console.log(people)
+
+// console.log(people[1].getFavouriteColor(29));
+
+// people.forEach((object) => console.log(object.getFavouriteColor()));
+
+//------------------------
+//REVIEW: 3. jest ok!
+//------------------------
 
 /*
         3. 
@@ -222,6 +242,13 @@ for (number in people) {
         b) funkcja powinna wykonać dokładnie takie samo działanie jak poprzednia
         c) Za pomocą pętli for of przeiteruj po wszystkich osobach z tablicy i wyświetl ich ulubione kolory
     */
+
+//------------------------
+//REVIEW: 4. To jest do lekkiej poprawki. Funkcja jest ok, bo jest poza obiektem, natomiast powinna iterować po obiektach. Spróbuj wywołać funkcję w pętli, a nie na pojedynczej osobie.
+
+// wywołanie powinno przyjmować getFavouriteColor(osoba, numer)
+//------------------------
+
 
 function getFavouriteColor(number, index) {
   if (number >= 1 && number <= 30) {
@@ -309,8 +336,14 @@ function selection(element) {
     return element;
   } else {
     return (
+      //------------------------
+      //nie wiem czy tu sprawdzana jest długość nicka (6), upewnij się że ten warunek też jest sprawdzany
+      //------------------------
       element.lastName.length &&
       element.nickname.includes("a") &&
+      //------------------------
+      //tu można użyć metody endsWith()
+      //------------------------
       (element.firstName[element.firstName.length - 1] === "k" ||
         element.firstName[element.firstName.length - 1] === "a")
     );
@@ -335,7 +368,12 @@ const filteredPeople = people
     return acc;
   }, {});
 
-///console.log(filteredPeople);
+
+//------------------------
+//nie widzę sortowania alfabetycznego z punktu g)
+//------------------------
+
+// console.log(filteredPeople);
 
 /*
         *6. Currying function
@@ -351,14 +389,20 @@ const filteredPeople = people
         - funkcja może korzystać ze zmiennych i parametrów funkcji zewnętrznych (czyli tych w których się znajduje)
     */
 
+//------------------------
+//6. Jest ok!
+//------------------------
+
+
 function multi(a) {
   return function (b) {
     return a * b;
   };
 }
 const multiplyBySix = multi(6);
-// console.log(multi(5)(5));
-// console.log(multiplyBySix(10));
+
+console.log(multi(5)(5));
+console.log(multiplyBySix(10));
 
 function multiFourNumbers(a) {
   return function (b) {
