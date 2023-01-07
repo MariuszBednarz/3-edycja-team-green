@@ -298,6 +298,33 @@ console.log(mappedPeople)
     g) posortuj tablicę alfabetycznie
 */
 
+function multi (a){
+       return function multiplyBySix(b){
+        return a*b
+      }
+    }
+
+console.log(multi(2)(2))
+
+function sum(a){
+  return function (b){
+    return a*b
+  }
+}
+const multiplyBySix = sum(6)
+console.log('multi', multiplyBySix(10))
+
+function multi2 (a){
+  return function (b){
+    return function (c){
+      return function(d){
+        return a*b*c*d
+      }
+    }
+  }
+}
+console.log(multi2(2)(2)(2)(2))
+
 /*
     *6. Currying function
     a) Napisz taką funkcję mnożącą 2 liczby, aby możliwe były następujące wywołania:
