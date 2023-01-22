@@ -23,44 +23,44 @@
       - Na stringach czy pojedynczych literkach możemy używać metod toLowerCase(), toUpperCase()
   */
 
-const people = [
-  {
-    firstName: "Bartolomeo",
-    lastName: "Lozano",
-  },
-  {
-    firstName: "Mateo",
-    lastName: "Loza",
-  },
-];
+// const people = [
+//   {
+//     firstName: "Bartolomeo",
+//     lastName: "Lozano",
+//   },
+//   {
+//     firstName: "Mateo",
+//     lastName: "Loza",
+//   },
+// ];
 
-const peopleWithNickname = people.map(function (item, index) {
-  const firstNameArray = item.firstName.split("");
-  const reversedNamesLetters = firstNameArray
-    .filter(function (item, index) {
-      if (index < 3) {
-        return item;
-      }
-    })
-    .reverse();
+// const peopleWithNickname = people.map(function (item, index) {
+//   const firstNameArray = item.firstName.split("");
+//   const reversedNamesLetters = firstNameArray
+//     .filter(function (item, index) {
+//       if (index < 3) {
+//         return item;
+//       }
+//     })
+//     .reverse();
 
-  const lastNameArray = item.lastName.split("");
-  const reversedLastNamesLetters = lastNameArray
-    .reverse()
-    .filter(function (item, index) {
-      if (index < 3) {
-        return item;
-      }
-    });
-  const nicknameString =
-    reversedNamesLetters.join("").toLowerCase() +
-    reversedLastNamesLetters.join("").toLowerCase();
-  const nicknameArray = nicknameString.split("");
-  nicknameArray[0] = nicknameArray[0].toUpperCase();
-  const nickname = nicknameArray.join("");
-  item.nickname = nickname;
-  return item;
-});
+//   const lastNameArray = item.lastName.split("");
+//   const reversedLastNamesLetters = lastNameArray
+//     .reverse()
+//     .filter(function (item, index) {
+//       if (index < 3) {
+//         return item;
+//       }
+//     });
+//   const nicknameString =
+//     reversedNamesLetters.join("").toLowerCase() +
+//     reversedLastNamesLetters.join("").toLowerCase();
+//   const nicknameArray = nicknameString.split("");
+//   nicknameArray[0] = nicknameArray[0].toUpperCase();
+//   const nickname = nicknameArray.join("");
+//   item.nickname = nickname;
+//   return item;
+// });
 
 /* 
     2. 
@@ -85,18 +85,18 @@ const peopleWithNickname = people.map(function (item, index) {
     
 */
 
-function introduceYourself() {
-  return `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickname}`;
-}
+// function introduceYourself() {
+//   return `Cześć jestem ${this.firstName} ${this.lastName}, ale w szkole mówią na mnie ${this.nickname}`;
+// }
 
-const peopleWithNicknameAndFunction = peopleWithNickname.map(function (item) {
-  const newItem = { ...item, introduceYourself };
-  return newItem;
-});
+// const peopleWithNicknameAndFunction = peopleWithNickname.map(function (item) {
+//   const newItem = { ...item, introduceYourself };
+//   return newItem;
+// });
 
-peopleWithNicknameAndFunction.forEach(function (item) {
-  console.log(item.introduceYourself());
-});
+// peopleWithNicknameAndFunction.forEach(function (item) {
+//   console.log(item.introduceYourself());
+// });
 
 /*
     3. 
@@ -120,40 +120,40 @@ peopleWithNicknameAndFunction.forEach(function (item) {
     dowoloną ilość kolorów
 */
 
-const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
+// const colors = ["red", "green", "yellow", "blue", "pink", "orange"];
 
-function getFavouriteColor(number) {
-  let check = 0;
-  if (number < 1) {
-    check = 1;
-    return `Podałeś za małą liczbą, liczba nie moze być mniejsza niz 1`;
-  } else if (number > 30) {
-    check = 1;
-    return `Podałeś za duzą liczbę, liczba nie moze być większa niz 30`;
-  } else if (number === undefined) {
-    number = 5;
-  } else {
-    number;
-  }
-  if (check === 0) {
-    const lettersSum = Math.abs(
-      this.firstName.length +
-        this.lastName.length +
-        this.nickname.length -
-        number
-    );
+// function getFavouriteColor(number) {
+//   let check = 0;
+//   if (number < 1) {
+//     check = 1;
+//     return `Podałeś za małą liczbą, liczba nie moze być mniejsza niz 1`;
+//   } else if (number > 30) {
+//     check = 1;
+//     return `Podałeś za duzą liczbę, liczba nie moze być większa niz 30`;
+//   } else if (number === undefined) {
+//     number = 5;
+//   } else {
+//     number;
+//   }
+//   if (check === 0) {
+//     const lettersSum = Math.abs(
+//       this.firstName.length +
+//         this.lastName.length +
+//         this.nickname.length -
+//         number
+//     );
 
-    const index = lettersSum % colors.length;
-    const color = colors[index];
-    return color;
-  }
-}
-const peopleWithNicknameFunctionAndColor = peopleWithNicknameAndFunction.map(
-  function (item) {
-    const newObject = { ...item, getFavouriteColor };
-    return newObject;
-  }
-);
+//     const index = lettersSum % colors.length;
+//     const color = colors[index];
+//     return color;
+//   }
+// }
+// const peopleWithNicknameFunctionAndColor = peopleWithNicknameAndFunction.map(
+//   function (item) {
+//     const newObject = { ...item, getFavouriteColor };
+//     return newObject;
+//   }
+// );
 // console.log(peopleWithNicknameFunctionAndColor[1].getFavouriteColor(25));
 // console.log(peopleWithNicknameFunctionAndColor);
 
@@ -164,35 +164,35 @@ const peopleWithNicknameFunctionAndColor = peopleWithNicknameAndFunction.map(
     c) Za pomocą pętli for of przeiteruj po wszystkich osobach z tablicy i wyświetl ich ulubione kolory
 */
 
-function getFavouriteColor2(persons, number) {
-  let check = 0;
-  let favColors = [];
-  if (number < 1) {
-    check = 1;
-    return `Podałeś za małą liczbą, liczba nie moze być mniejsza niz 1`;
-  } else if (number > 30) {
-    check = 1;
-    return `Podałeś za duzą liczbę, liczba nie moze być większa niz 30`;
-  } else if (number === undefined) {
-    number = 5;
-  } else {
-    number;
-  }
-  for (let person of persons) {
-    if (check === 0) {
-      const lettersSum = Math.abs(
-        person.firstName.length +
-          person.lastName.length +
-          person.nickname.length -
-          number
-      );
-      const index = lettersSum % colors.length;
-      const color = colors[index];
-      favColors.push(color);
-    }
-  }
-  return favColors;
-}
+// function getFavouriteColor2(persons, number) {
+//   let check = 0;
+//   let favColors = [];
+//   if (number < 1) {
+//     check = 1;
+//     return `Podałeś za małą liczbą, liczba nie moze być mniejsza niz 1`;
+//   } else if (number > 30) {
+//     check = 1;
+//     return `Podałeś za duzą liczbę, liczba nie moze być większa niz 30`;
+//   } else if (number === undefined) {
+//     number = 5;
+//   } else {
+//     number;
+//   }
+//   for (let person of persons) {
+//     if (check === 0) {
+//       const lettersSum = Math.abs(
+//         person.firstName.length +
+//           person.lastName.length +
+//           person.nickname.length -
+//           number
+//       );
+//       const index = lettersSum % colors.length;
+//       const color = colors[index];
+//       favColors.push(color);
+//     }
+//   }
+//   return favColors;
+// }
 // console.log(getFavouriteColor2(peopleWithNicknameAndFunction, 25));
 
 /*
@@ -233,60 +233,174 @@ function getFavouriteColor2(persons, number) {
      g) posortuj tablicę alfabetycznie
  */
 
-const number = Math.trunc(Math.random() * 100);
-function isAPrime(number) {
-  let prime = true;
-  if (number === 1) {
-    prime = false;
-  } else if (number > 1) {
-    for (i = 2; i < number; i++) {
-      if (number % i == 0) {
-        prime = false;
-        break;
-      }
-    }
+// const number = Math.trunc(Math.random() * 100);
+// function isAPrime(number) {
+//   let prime = true;
+//   if (number === 1) {
+//     prime = false;
+//   } else if (number > 1) {
+//     for (i = 2; i < number; i++) {
+//       if (number % i == 0) {
+//         prime = false;
+//         break;
+//       }
+//     }
+//   }
+//   return prime;
+// }
+// function isDivisibleBy3And5(number) {
+//   if (number % 3 === 0 && number % 5 === 0) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
+// const isElite =
+//   isAPrime(number) == true || isDivisibleBy3And5(number) == true ? true : false;
+
+// const filteredPeople = peopleWithNicknameFunctionAndColor
+//   .filter(function (item) {
+//     return (
+//       ((item.firstName[item.firstName.length - 1] == "a" ||
+//         item.firstName[item.firstName.length - 1] == "k") &&
+//         item.lastName.length > 6 &&
+//         item.nickname.includes("a")) ||
+//       isElite
+//     );
+//   })
+//   .map(function (item) {
+//     const reversedObj = {};
+//     for (let keys in item) {
+//       if (keys != "introduceYourself" && keys != "getFavouriteColor") {
+//         reversedObj[item[keys]] = keys;
+//       }
+//     }
+//     return reversedObj;
+//   })
+//   .reduce(function (acc, curr) {
+//     for (keys in curr) {
+//       acc[keys] = curr[keys];
+//     }
+//     return acc;
+//   }, {});
+
+// console.log(filteredPeople);
+
+// console.log(number);
+// console.log(isAPrime(number));
+// console.log(isDivisibleBy3And5(number));
+// console.log(isElite);
+
+/*
+    *6. Currying function
+    a) Napisz taką funkcję mnożącą 2 liczby, aby możliwe były następujące wywołania:
+    - multi(5)(6)
+    - const multiplyBySix = sum(6)
+      multiplyBySix(10)
+    b) Analogicznie napisz funkcję, która mnoży 4 liczby i możliwe jest wywołanie
+    - multi(4)(5)(6)(10)
+
+    Hints:
+    - funkcja może zwracać inne funkcje
+    - funkcja może korzystać ze zmiennych i parametrów funkcji zewnętrznych (czyli tych w których się znajduje)
+*/
+
+// function multi(a) {
+//   return function (b) {
+//     console.log(a * b);
+//   };
+// }
+// multi(5)(6);
+
+// function sum(a) {
+//   return function multi(b) {
+//     console.log(a * b);
+//   };
+// }
+// const multiplyBySix = sum(6);
+// multiplyBySix(10);
+
+// function multi2(a) {
+//   return function (b) {
+//     return function (c) {
+//       return function (d) {
+//         console.log(a * b * c * d);
+//       };
+//     };
+//   };
+// }
+// multi2(4)(5)(6)(10);
+
+/*
+    **7. Rekurencja
+     a) Mając zagnieżdżony obiekt, wyciągnij z niego wszystkie imiona i dodaj do tablicy
+     ***b) Jeżeli osoba ma więcej niż jedno imię, te imiona powinny znajdować się w jednym stringu w tablicy
+     Na przykład 'Kamil Bartek'
+    INPUT:
+*/
+const nestedObject = {
+  name: "Kamil",
+  children: [
+    {
+      name: "Zosia",
+    },
+    {
+      name: "Krysia",
+      name2: "Barbara",
+      children: [
+        {
+          name: "Basia",
+          children: [
+            {
+              name: "Monika",
+              name2: "Viola",
+              children: [
+                {
+                  name: "Mateusz",
+                },
+                {
+                  name: "Sebastian",
+                  name2: "August",
+                  name3: "Franciszek",
+                  children: [
+                    { name: "Alex" },
+                    { name: "Stasio" },
+                    {
+                      name: "Paulina",
+                      children: [{ name: "Kuba" }, { name: "Kacper" }],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+const names = [];
+
+function arrOfNames(object) {
+  let personsNames = [];
+  if (object.name) {
+    personsNames.push(object.name);
   }
-  return prime;
-}
-function isDivisibleBy3And5(number) {
-  if (number % 3 === 0 && number % 5 === 0) {
-    return true;
-  } else {
-    return false;
+  if (object.name2) {
+    personsNames.push(object.name2);
+  }
+  if (object.name3) {
+    personsNames.push(object.name3);
+  }
+  if (personsNames.length) {
+    names.push(personsNames);
+  }
+  if (object.children) {
+    object.children.forEach(function (item) {
+      arrOfNames(item);
+    });
   }
 }
-const isElite =
-  isAPrime(number) == true || isDivisibleBy3And5(number) == true ? true : false;
-
-const filteredPeople = peopleWithNicknameFunctionAndColor
-  .filter(function (item) {
-    return (
-      ((item.firstName[item.firstName.length - 1] == "a" ||
-        item.firstName[item.firstName.length - 1] == "k") &&
-        item.lastName.length > 6 &&
-        item.nickname.includes("a")) ||
-      isElite
-    );
-  })
-  .map(function (item) {
-    const reversedObj = {};
-    for (let keys in item) {
-      if (keys != "introduceYourself" && keys != "getFavouriteColor") {
-        reversedObj[item[keys]] = keys;
-      }
-    }
-    return reversedObj;
-  })
-  .reduce(function (acc, curr) {
-    for (keys in curr) {
-      acc[keys] = curr[keys];
-    }
-    return acc;
-  }, {});
-
-console.log(filteredPeople);
-
-console.log(number);
-console.log(isAPrime(number));
-console.log(isDivisibleBy3And5(number));
-console.log(isElite);
+arrOfNames(nestedObject);
+console.log(names);
