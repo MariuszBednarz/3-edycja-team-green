@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poller One", cursive;
+}
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.table {
+  flex-grow: 1;
+}
+
+table {
+  border: 2px solid black;
+  border-collapse: collapse;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+}
+
+.closeButton {
+  position: absolute;
+  align-self: flex-end;
+}

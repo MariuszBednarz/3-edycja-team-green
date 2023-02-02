@@ -2,9 +2,11 @@ const BASE_URL = "https://swapi.dev/api/";
 let api;
 const state = {
   buttons: [],
+  detailContainer: [],
 };
 let currentCollection;
 let currentDataBin;
+let currentDetails;
 
 class Base {
   constructor(name, created, url) {
@@ -63,30 +65,20 @@ class Specie extends Base {
 }
 
 class Vehicle extends Base {
-  constructor(name, created, url, model, manufacturer, cost_in_credits) {
+  constructor(name, created, url, model, manufacturer) {
     super(name, created, url);
 
     this.model = model;
     this.manufacturer = manufacturer;
-    this.cost_in_credits = cost_in_credits;
   }
 }
 
 class Starship extends Base {
-  constructor(
-    name,
-    created,
-    url,
-    model,
-    manufacturer,
-    cost_in_credits,
-    hyperdrive_rating
-  ) {
+  constructor(name, created, url, model, manufacturer, hyperdrive_rating) {
     super(name, created, url);
 
     this.model = model;
     this.manufacturer = manufacturer;
-    this.cost_in_credits = cost_in_credits;
     this.hyperdrive_rating = hyperdrive_rating;
   }
 }
@@ -96,16 +88,16 @@ async function initiation() {
   const data = await response.json();
   api = data;
   const buttons = document.getElementById("buttons");
-  renderButtons(data);
-  console.log(state.buttons);
+  renderHeaderButtons(data);
 }
+
 async function loadCollection(collection) {
   const response = await fetch(collection);
   const rawData = await response.json();
   currentCollection = rawData;
   dataBinFiller();
   createTable();
-  console.log(currentDataBin);
+  createDetailContainer();
 }
 
 function dataBinFiller() {
@@ -168,7 +160,6 @@ function dataBinFiller() {
         element.url,
         element.model,
         element.manufacturer,
-        element.cost_in_credits,
         element.hyperdrive_rating
       );
       currentDataBin.push(currentRecord);
@@ -180,8 +171,7 @@ function dataBinFiller() {
         element.created,
         element.url,
         element.model,
-        element.manufacturer,
-        element.cost_in_credits
+        element.manufacturer
       );
       currentDataBin.push(currentRecord);
     });
@@ -193,6 +183,8 @@ function createTable() {
   content.innerHTML = "";
 
   const table = document.createElement("table");
+  table.setAttribute("class", "table");
+
   content.appendChild(table);
 
   let index = 0;
@@ -254,15 +246,29 @@ function createTable() {
 
     const deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Delete";
+    deleteButton.addEventListener("click", function () {
+      row.style.display = "none";
+    });
     buttonCell.appendChild(deleteButton);
 
     const detailButton = document.createElement("button");
     detailButton.innerHTML = "Details";
+    detailButton.addEventListener("click", function () {
+      loadDetails(element.url);
+    });
     buttonCell.appendChild(detailButton);
   });
 }
 
-function renderButtons(APIData) {
+function createDetailContainer() {
+  const content = document.getElementById("content");
+  const detailContainer = document.createElement("div");
+  detailContainer.setAttribute("id", "detailContainer");
+  detailContainer.style.visibility = "hidden";
+  content.appendChild(detailContainer);
+}
+
+function renderHeaderButtons(APIData) {
   Object.entries(APIData).map(([key, value]) => {
     const button = document.createElement("button");
     button.innerHTML = key.toUpperCase();
@@ -272,6 +278,68 @@ function renderButtons(APIData) {
     buttons.appendChild(button);
     state.buttons.push(button);
   });
+}
+
+async function loadDetails(url) {
+  currentDetails = null;
+  response = await fetch(url);
+  currentDetails = await response.json();
+
+  const detailContainer = document.getElementById("detailContainer");
+  detailContainer.innerHTML = "";
+  detailContainer.style.visibility = "visible";
+
+  const table = document.createElement("table");
+  detailContainer.appendChild(table);
+
+  const detailsEntries = Object.entries(currentDetails);
+  detailsEntries.forEach(([key, value]) => {
+    if (key !== "url" && key !== "edited" && key !== "opening_crawl") {
+      if (typeof value === "object") {
+        const row = document.createElement("tr");
+        table.appendChild(row);
+
+        const detailProperty = document.createElement("td");
+        detailProperty.setAttribute("id", "detailKey");
+        detailProperty.innerHTML = key;
+        row.appendChild(detailProperty);
+
+        const detailValue = document.createElement("td");
+        row.appendChild(detailValue);
+
+        const listofNames = document.createElement("ul");
+        detailValue.appendChild(listofNames);
+
+        const arrayofLinks = linkListLoader(value);
+
+        arrayofLinks.forEach((element) => {
+          const nameOnList = document.createElement("li");
+          nameOnList.innerHTML = element;
+          listofNames.appendChild(nameOnList);
+        });
+      } else {
+        const row = document.createElement("tr");
+        table.appendChild(row);
+
+        const detailProperty = document.createElement("td");
+        detailProperty.setAttribute("id", "detailKey");
+        detailProperty.innerHTML = key;
+        row.appendChild(detailProperty);
+
+        const detailValue = document.createElement("td");
+        detailValue.innerHTML = value;
+        row.appendChild(detailValue);
+      }
+    }
+  });
+  const closeButton = document.createElement("button");
+  closeButton.innerHTML = "Close";
+  closeButton.addEventListener("click", function () {
+    detailContainer.style.visibility = "hidden";
+    detailContainer.innerHTML = "";
+  });
+  closeButton.setAttribute("class", "closeButton");
+  detailContainer.appendChild(closeButton);
 }
 
 function changePosition(arr, from, to) {
@@ -291,6 +359,34 @@ function dateCorrect(date) {
   const day = arrayOfDate.splice(2, 2);
 
   return day.concat("-").concat(month).concat("-").concat(year).join(``);
+}
+
+function linkListLoader(urlList) {
+  const arrayOfNames = [];
+  urlList.forEach((element) => {
+    let urlData;
+    fetch(element)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.name == undefined) {
+          urlData = data.title;
+        } else {
+          urlData = data.name;
+        }
+        arrayOfNames.push(urlData);
+      });
+  });
+  return arrayOfNames;
+}
+
+async function linkNameLoader(url) {
+  const response = await fetch(url);
+  const data = await response.json();
+  if (data.name == undefined) {
+    return data.title;
+  } else {
+    return data.name;
+  }
 }
 
 initiation();
