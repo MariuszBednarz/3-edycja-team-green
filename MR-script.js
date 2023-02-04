@@ -95,39 +95,18 @@ async function loadCollection(collection) {
   const response = await fetch(collection);
   const rawData = await response.json();
   currentCollection = rawData;
+  console.log(currentCollection);
+
   dataBinFiller();
-  createTable();
+  setTimeout(createTable, 3000);
 }
 
 function dataBinFiller() {
   currentDataBin = [];
-
-  let currentRecord;
   if (currentCollection.results[0].gender !== undefined) {
-    currentCollection.results.forEach((element) => {
-      currentRecord = new Person(
-        element.name,
-        element.created,
-        element.url,
-        element.height,
-        element.mass,
-        element.gender
-      );
-      currentDataBin.push(currentRecord);
-    });
+    fillWithPeople(currentCollection);
   } else if (currentCollection.results[0].rotation_period !== undefined) {
-    currentCollection.results.forEach((element) => {
-      currentRecord = new Planet(
-        element.name,
-        element.created,
-        element.url,
-        element.rotation_period,
-        element.orbital_period,
-        element.diameter,
-        element.climate
-      );
-      currentDataBin.push(currentRecord);
-    });
+    fillWithPlanets(currentCollection);
   } else if (currentCollection.results[0].episode_id !== undefined) {
     currentCollection.results.forEach((element) => {
       currentRecord = new Film(
@@ -140,40 +119,11 @@ function dataBinFiller() {
       currentDataBin.push(currentRecord);
     });
   } else if (currentCollection.results[0].average_height !== undefined) {
-    currentCollection.results.forEach((element) => {
-      currentRecord = new Specie(
-        element.name,
-        element.created,
-        element.url,
-        element.classification,
-        element.designation,
-        element.average_height
-      );
-      currentDataBin.push(currentRecord);
-    });
+    fillWithSpecies(currentCollection);
   } else if (currentCollection.results[0].hyperdrive_rating !== undefined) {
-    currentCollection.results.forEach((element) => {
-      currentRecord = new Starship(
-        element.name,
-        element.created,
-        element.url,
-        element.model,
-        element.manufacturer,
-        element.hyperdrive_rating
-      );
-      currentDataBin.push(currentRecord);
-    });
+    fillWithStarships(currentCollection);
   } else {
-    currentCollection.results.forEach((element) => {
-      currentRecord = new Vehicle(
-        element.name,
-        element.created,
-        element.url,
-        element.model,
-        element.manufacturer
-      );
-      currentDataBin.push(currentRecord);
-    });
+    fillWithVehicles(currentCollection);
   }
 }
 
@@ -304,12 +254,10 @@ function createTable() {
   nextButton.addEventListener("click", function () {});
   pageBar.appendChild(nextButton);
 
-  if (currentCollectionURL.includes("page=")) {
-    const previousButton = document.createElement("button");
-    previousButton.innerHTML = "Previous";
-    previousButton.addEventListener("click", function () {});
-    pageBar.appendChild(previousButton);
-  }
+  const previousButton = document.createElement("button");
+  previousButton.innerHTML = "Previous";
+  previousButton.addEventListener("click", function () {});
+  pageBar.appendChild(previousButton);
 }
 
 function renderHeaderButtons(APIData) {
@@ -442,6 +390,162 @@ async function linkNameLoader(url) {
   } else {
     return data.name;
   }
+}
+
+async function fillWithPeople(collection) {
+  if (collection.next === undefined || collection.next === null) {
+    collection.results.forEach((element) => {
+      currentRecord = new Person(
+        element.name,
+        element.created,
+        element.url,
+        element.height,
+        element.mass,
+        element.gender
+      );
+      currentDataBin.push(currentRecord);
+      console.log(currentDataBin);
+    });
+  }
+  collection.results.forEach((element) => {
+    currentRecord = new Person(
+      element.name,
+      element.created,
+      element.url,
+      element.height,
+      element.mass,
+      element.gender
+    );
+    currentDataBin.push(currentRecord);
+  });
+  const response = await fetch(collection.next);
+  const nextCollection = await response.json();
+
+  fillWithPeople(nextCollection);
+}
+
+async function fillWithPlanets(collection) {
+  if (collection.next === undefined || collection.next === null) {
+    currentCollection.results.forEach((element) => {
+      currentRecord = new Planet(
+        element.name,
+        element.created,
+        element.url,
+        element.rotation_period,
+        element.orbital_period,
+        element.diameter,
+        element.climate
+      );
+      currentDataBin.push(currentRecord);
+    });
+  }
+  collection.results.forEach((element) => {
+    currentRecord = new Planet(
+      element.name,
+      element.created,
+      element.url,
+      element.rotation_period,
+      element.orbital_period,
+      element.diameter,
+      element.climate
+    );
+    currentDataBin.push(currentRecord);
+  });
+  const response = await fetch(collection.next);
+  const nextCollection = await response.json();
+
+  fillWithPlanets(nextCollection);
+}
+
+async function fillWithSpecies(collection) {
+  if (collection.next === undefined || collection.next === null) {
+    collection.results.forEach((element) => {
+      currentRecord = new Specie(
+        element.name,
+        element.created,
+        element.url,
+        element.classification,
+        element.designation,
+        element.average_height
+      );
+      currentDataBin.push(currentRecord);
+    });
+  }
+  collection.results.forEach((element) => {
+    currentRecord = new Specie(
+      element.name,
+      element.created,
+      element.url,
+      element.classification,
+      element.designation,
+      element.average_height
+    );
+    currentDataBin.push(currentRecord);
+  });
+  const response = await fetch(collection.next);
+  const nextCollection = await response.json();
+
+  fillWithSpecies(nextCollection);
+}
+
+async function fillWithStarships(collection) {
+  if (collection.next === undefined || collection.next === null) {
+    collection.results.forEach((element) => {
+      currentRecord = new Starship(
+        element.name,
+        element.created,
+        element.url,
+        element.model,
+        element.manufacturer,
+        element.hyperdrive_rating
+      );
+      currentDataBin.push(currentRecord);
+    });
+  }
+  collection.results.forEach((element) => {
+    currentRecord = new Starship(
+      element.name,
+      element.created,
+      element.url,
+      element.model,
+      element.manufacturer,
+      element.hyperdrive_rating
+    );
+    currentDataBin.push(currentRecord);
+  });
+  const response = await fetch(collection.next);
+  const nextCollection = await response.json();
+
+  fillWithStarships(nextCollection);
+}
+
+async function fillWithVehicles(collection) {
+  if (collection.next === undefined || collection.next === null) {
+    collection.results.forEach((element) => {
+      currentRecord = new Vehicle(
+        element.name,
+        element.created,
+        element.url,
+        element.model,
+        element.manufacturer
+      );
+      currentDataBin.push(currentRecord);
+    });
+  }
+  collection.results.forEach((element) => {
+    currentRecord = new Vehicle(
+      element.name,
+      element.created,
+      element.url,
+      element.model,
+      element.manufacturer
+    );
+    currentDataBin.push(currentRecord);
+  });
+  const response = await fetch(collection.next);
+  const nextCollection = await response.json();
+
+  fillWithVehicles(nextCollection);
 }
 
 initiation();
