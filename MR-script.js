@@ -179,13 +179,13 @@ function dataBinFiller() {
 }
 
 function createTable() {
-  const content = document.getElementById("content");
-  content.innerHTML = "";
+  const tableSpace = document.getElementById("tableSpace");
+  tableSpace.innerHTML = "";
 
   const table = document.createElement("table");
   table.setAttribute("class", "table");
 
-  content.appendChild(table);
+  tableSpace.appendChild(table);
 
   let index = 0;
 
@@ -247,7 +247,44 @@ function createTable() {
     const deleteButton = document.createElement("button");
     deleteButton.innerHTML = "Delete";
     deleteButton.addEventListener("click", function () {
-      row.style.display = "none";
+      const mainContainer = document.getElementById("main-container");
+
+      const overlay = document.createElement("div");
+      overlay.setAttribute("id", "overlay");
+      mainContainer.appendChild(overlay);
+
+      const modal = document.createElement("div");
+      modal.setAttribute("class", "modal");
+      modal.setAttribute("id", modal);
+      mainContainer.appendChild(modal);
+
+      const modalQuestion = document.createElement("div");
+      modalQuestion.innerHTML = "Are you sure?";
+      modal.appendChild(modalQuestion);
+
+      const modalButtonBox = document.createElement("div");
+      modal.appendChild(modalButtonBox);
+
+      const yesButton = document.createElement("button");
+      yesButton.innerHTML = "Yes";
+      yesButton.setAttribute("class", "button");
+      yesButton.addEventListener("click", function () {
+        row.style.display = "none";
+        modal.style.display = "none";
+        modal.innerHTML = "";
+        overlay.style.display = "none";
+      });
+      modalButtonBox.appendChild(yesButton);
+
+      const noButton = document.createElement("button");
+      noButton.innerHTML = "No";
+      noButton.setAttribute("class", "button");
+      noButton.addEventListener("click", function () {
+        modal.style.display = "none";
+        modal.innerHTML = "";
+        overlay.style.display = "none";
+      });
+      modalButtonBox.appendChild(noButton);
     });
     buttonCell.appendChild(deleteButton);
 

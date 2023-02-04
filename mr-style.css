@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: 1s ease-in-out;
 }
 
 body {
@@ -36,4 +37,35 @@ div {
 .closeButton {
   position: absolute;
   align-self: flex-end;
+}
+
+#tableSpace {
+  background-color: greenyellow;
+  width: 100%;
+  height: 50vh;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: green;
+  z-index: 10;
+}
+
+#overlay {
+  position: fixed;
+  z-index: 9;
+  width: 100%;
+  height: 100%;
+  background-color: darkslategrey;
+  opacity: 70%;
+}
+
+.button {
+  cursor: pointer;
 }
