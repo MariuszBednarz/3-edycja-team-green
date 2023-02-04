@@ -97,7 +97,6 @@ async function loadCollection(collection) {
   currentCollection = rawData;
   dataBinFiller();
   createTable();
-  createDetailContainer();
 }
 
 function dataBinFiller() {
@@ -291,22 +290,30 @@ function createTable() {
     const detailButton = document.createElement("button");
     detailButton.innerHTML = "Details";
     detailButton.addEventListener("click", function () {
+      detailContainer.innerHTML = "";
       loadDetails(element.url);
     });
     buttonCell.appendChild(detailButton);
   });
-}
 
-function createDetailContainer() {
-  const content = document.getElementById("content");
-  const detailContainer = document.createElement("div");
-  detailContainer.setAttribute("id", "detailContainer");
-  detailContainer.style.visibility = "hidden";
-  content.appendChild(detailContainer);
+  const pageBar = document.createElement("div");
+  content.appendChild(pageBar);
+
+  const nextButton = document.createElement("button");
+  nextButton.innerHTML = "Next";
+  nextButton.addEventListener("click", function () {});
+  pageBar.appendChild(nextButton);
+
+  if (currentCollectionURL.includes("page=")) {
+    const previousButton = document.createElement("button");
+    previousButton.innerHTML = "Previous";
+    previousButton.addEventListener("click", function () {});
+    pageBar.appendChild(previousButton);
+  }
 }
 
 function renderHeaderButtons(APIData) {
-  Object.entries(APIData).map(([key, value]) => {
+  Object.entries(APIData).forEach(([key, value]) => {
     const button = document.createElement("button");
     button.innerHTML = key.toUpperCase();
     button.addEventListener("click", function () {
@@ -324,7 +331,7 @@ async function loadDetails(url) {
 
   const detailContainer = document.getElementById("detailContainer");
   detailContainer.innerHTML = "";
-  detailContainer.style.visibility = "visible";
+  detailContainer.style.left = "50%";
 
   const table = document.createElement("table");
   detailContainer.appendChild(table);
@@ -354,6 +361,18 @@ async function loadDetails(url) {
           nameOnList.innerHTML = element;
           listofNames.appendChild(nameOnList);
         });
+      } else if (key === "created") {
+        const row = document.createElement("tr");
+        table.appendChild(row);
+
+        const detailProperty = document.createElement("td");
+        detailProperty.setAttribute("id", "detailKey");
+        detailProperty.innerHTML = key;
+        row.appendChild(detailProperty);
+
+        const detailValue = document.createElement("td");
+        detailValue.innerHTML = dateCorrect(value);
+        row.appendChild(detailValue);
       } else {
         const row = document.createElement("tr");
         table.appendChild(row);
@@ -372,8 +391,7 @@ async function loadDetails(url) {
   const closeButton = document.createElement("button");
   closeButton.innerHTML = "Close";
   closeButton.addEventListener("click", function () {
-    detailContainer.style.visibility = "hidden";
-    detailContainer.innerHTML = "";
+    detailContainer.style.left = "100%";
   });
   closeButton.setAttribute("class", "closeButton");
   detailContainer.appendChild(closeButton);

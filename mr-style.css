@@ -15,9 +15,7 @@ body {
 }
 
 #content {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+  justify-content: start;
 }
 
 .table {
@@ -42,7 +40,8 @@ div {
 #tableSpace {
   background-color: greenyellow;
   width: 100%;
-  height: 50vh;
+  height: 70vh;
+  overflow: scroll;
 }
 
 .modal {
@@ -68,4 +67,12 @@ div {
 
 .button {
   cursor: pointer;
+}
+
+#detailContainer {
+  position: absolute;
+  background-color: grey;
+  left: 100%;
+  height: 70vh;
+  width: 50%;
 }
