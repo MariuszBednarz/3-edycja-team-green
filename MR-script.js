@@ -184,7 +184,7 @@ function createTable() {
     }
   });
 
-  {
+  if (currentTableContainer.length == currentTableCount) {
     currentTableContainer.forEach((element) => {
       const row = document.createElement("tr");
       table.appendChild(row);
@@ -269,6 +269,106 @@ function createTable() {
       });
       buttonCell.appendChild(detailButton);
     });
+  } else {
+    const emptyCellCount = currentTableCount - currentTableContainer.length;
+
+    currentTableContainer.forEach((element) => {
+      const row = document.createElement("tr");
+      table.appendChild(row);
+
+      index++;
+      const indexOfRecord = document.createElement("td");
+      indexOfRecord.innerHTML = index;
+      row.appendChild(indexOfRecord);
+
+      const arrayOfEntries = Object.entries(element);
+
+      changePosition(arrayOfEntries, indexOfCreated, arrayOfEntries.length - 1);
+
+      arrayOfEntries.forEach(([key, value]) => {
+        if (key !== "url") {
+          if (key == "created") {
+            const newDate = dateCorrect(value);
+
+            const valueCell = document.createElement("td");
+            valueCell.innerHTML = newDate;
+            row.appendChild(valueCell);
+          } else {
+            const valueCell = document.createElement("td");
+            valueCell.innerHTML = value;
+            row.appendChild(valueCell);
+          }
+        }
+      });
+
+      const buttonCell = document.createElement("td");
+      row.appendChild(buttonCell);
+
+      const deleteButton = document.createElement("button");
+      deleteButton.innerHTML = "Delete";
+      deleteButton.addEventListener("click", function () {
+        const mainContainer = document.getElementById("main-container");
+
+        const overlay = document.createElement("div");
+        overlay.setAttribute("id", "overlay");
+        mainContainer.appendChild(overlay);
+
+        const modal = document.createElement("div");
+        modal.setAttribute("class", "modal");
+        modal.setAttribute("id", modal);
+        mainContainer.appendChild(modal);
+
+        const modalQuestion = document.createElement("div");
+        modalQuestion.innerHTML = "Are you sure?";
+        modal.appendChild(modalQuestion);
+
+        const modalButtonBox = document.createElement("div");
+        modal.appendChild(modalButtonBox);
+
+        const yesButton = document.createElement("button");
+        yesButton.innerHTML = "Yes";
+        yesButton.setAttribute("class", "button");
+        yesButton.addEventListener("click", function () {
+          row.style.display = "none";
+          modal.style.display = "none";
+          modal.innerHTML = "";
+          overlay.style.display = "none";
+        });
+        modalButtonBox.appendChild(yesButton);
+
+        const noButton = document.createElement("button");
+        noButton.innerHTML = "No";
+        noButton.setAttribute("class", "button");
+        noButton.addEventListener("click", function () {
+          modal.style.display = "none";
+          modal.innerHTML = "";
+          overlay.style.display = "none";
+        });
+        modalButtonBox.appendChild(noButton);
+      });
+      buttonCell.appendChild(deleteButton);
+
+      const detailButton = document.createElement("button");
+      detailButton.innerHTML = "Details";
+      detailButton.addEventListener("click", function () {
+        detailContainer.innerHTML = "";
+        loadDetails(element.url);
+      });
+      buttonCell.appendChild(detailButton);
+    });
+    for (let i = 0; i < emptyCellCount; i++) {
+      const emptyRow = document.createElement("tr");
+      table.appendChild(emptyRow);
+
+      Object.keys(currentDataContainer[0]).forEach((key) => {
+        if (key !== "url") {
+          const emptyCell = document.createElement("td");
+          emptyCell.innerHTML = "none";
+          emptyCell.style.visibility = "hidden";
+          emptyRow.appendChild(emptyCell);
+        }
+      });
+    }
   }
 }
 
