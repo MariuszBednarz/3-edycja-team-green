@@ -5,8 +5,11 @@ const state = {
   detailContainer: [],
 };
 let currentCollection;
-let currentDataBin;
+let currentDataContainer;
 let currentDetails;
+let currentTableContainer;
+let currentPage = 1;
+let currentTableCount = 10;
 
 class Base {
   constructor(name, created, url) {
@@ -97,17 +100,18 @@ async function loadCollection(collection) {
   currentCollection = rawData;
   console.log(currentCollection);
 
-  dataBinFiller();
-  setTimeout(createTable, 3000);
+  dataContainerFiller();
 }
 
-function dataBinFiller() {
-  currentDataBin = [];
+async function dataContainerFiller() {
   if (currentCollection.results[0].gender !== undefined) {
+    currentDataContainer = [];
     fillWithPeople(currentCollection);
   } else if (currentCollection.results[0].rotation_period !== undefined) {
+    currentDataContainer = [];
     fillWithPlanets(currentCollection);
   } else if (currentCollection.results[0].episode_id !== undefined) {
+    currentDataContainer = [];
     currentCollection.results.forEach((element) => {
       currentRecord = new Film(
         element.title,
@@ -116,13 +120,17 @@ function dataBinFiller() {
         element.created,
         element.url
       );
-      currentDataBin.push(currentRecord);
+      currentDataContainer.push(currentRecord);
+      createTable();
     });
   } else if (currentCollection.results[0].average_height !== undefined) {
+    currentDataContainer = [];
     fillWithSpecies(currentCollection);
   } else if (currentCollection.results[0].hyperdrive_rating !== undefined) {
+    currentDataContainer = [];
     fillWithStarships(currentCollection);
   } else {
+    currentDataContainer = [];
     fillWithVehicles(currentCollection);
   }
 }
@@ -136,12 +144,12 @@ function createTable() {
 
   tableSpace.appendChild(table);
 
-  let index = 0;
+  let index = (currentPage - 1) * currentTableCount;
 
   const firstRow = document.createElement("tr");
   table.appendChild(firstRow);
 
-  const arrayOfKeys = Object.keys(currentDataBin[0]);
+  const arrayOfKeys = Object.keys(currentDataContainer[0]);
   const indexOfCreated = arrayOfKeys.indexOf("created");
   changePosition(arrayOfKeys, indexOfCreated, arrayOfKeys.length - 1);
 
@@ -161,103 +169,107 @@ function createTable() {
   actionColumn.innerHTML = "ACTIONS";
   firstRow.appendChild(actionColumn);
 
-  currentDataBin.forEach((element) => {
-    const row = document.createElement("tr");
-    table.appendChild(row);
-
-    index += 1;
-    const indexOfRecord = document.createElement("td");
-    indexOfRecord.innerHTML = index;
-    row.appendChild(indexOfRecord);
-
-    const arrayOfEntries = Object.entries(element);
-
-    changePosition(arrayOfEntries, indexOfCreated, arrayOfEntries.length - 1);
-
-    arrayOfEntries.forEach(([key, value]) => {
-      if (key !== "url") {
-        if (key == "created") {
-          const newDate = dateCorrect(value);
-
-          const valueCell = document.createElement("td");
-          valueCell.innerHTML = newDate;
-          row.appendChild(valueCell);
-        } else {
-          const valueCell = document.createElement("td");
-          valueCell.innerHTML = value;
-          row.appendChild(valueCell);
-        }
+  currentTableContainer = currentDataContainer.filter((element, index) => {
+    if (currentPage == 1) {
+      if (index < currentTableCount) {
+        return element;
       }
-    });
-
-    const buttonCell = document.createElement("td");
-    row.appendChild(buttonCell);
-
-    const deleteButton = document.createElement("button");
-    deleteButton.innerHTML = "Delete";
-    deleteButton.addEventListener("click", function () {
-      const mainContainer = document.getElementById("main-container");
-
-      const overlay = document.createElement("div");
-      overlay.setAttribute("id", "overlay");
-      mainContainer.appendChild(overlay);
-
-      const modal = document.createElement("div");
-      modal.setAttribute("class", "modal");
-      modal.setAttribute("id", modal);
-      mainContainer.appendChild(modal);
-
-      const modalQuestion = document.createElement("div");
-      modalQuestion.innerHTML = "Are you sure?";
-      modal.appendChild(modalQuestion);
-
-      const modalButtonBox = document.createElement("div");
-      modal.appendChild(modalButtonBox);
-
-      const yesButton = document.createElement("button");
-      yesButton.innerHTML = "Yes";
-      yesButton.setAttribute("class", "button");
-      yesButton.addEventListener("click", function () {
-        row.style.display = "none";
-        modal.style.display = "none";
-        modal.innerHTML = "";
-        overlay.style.display = "none";
-      });
-      modalButtonBox.appendChild(yesButton);
-
-      const noButton = document.createElement("button");
-      noButton.innerHTML = "No";
-      noButton.setAttribute("class", "button");
-      noButton.addEventListener("click", function () {
-        modal.style.display = "none";
-        modal.innerHTML = "";
-        overlay.style.display = "none";
-      });
-      modalButtonBox.appendChild(noButton);
-    });
-    buttonCell.appendChild(deleteButton);
-
-    const detailButton = document.createElement("button");
-    detailButton.innerHTML = "Details";
-    detailButton.addEventListener("click", function () {
-      detailContainer.innerHTML = "";
-      loadDetails(element.url);
-    });
-    buttonCell.appendChild(detailButton);
+    } else {
+      if (
+        index >= (currentPage - 1) * currentTableCount &&
+        index <= currentPage * currentTableCount - 1
+      ) {
+        return element;
+      }
+    }
   });
 
-  const pageBar = document.createElement("div");
-  content.appendChild(pageBar);
+  {
+    currentTableContainer.forEach((element) => {
+      const row = document.createElement("tr");
+      table.appendChild(row);
 
-  const nextButton = document.createElement("button");
-  nextButton.innerHTML = "Next";
-  nextButton.addEventListener("click", function () {});
-  pageBar.appendChild(nextButton);
+      index++;
+      const indexOfRecord = document.createElement("td");
+      indexOfRecord.innerHTML = index;
+      row.appendChild(indexOfRecord);
 
-  const previousButton = document.createElement("button");
-  previousButton.innerHTML = "Previous";
-  previousButton.addEventListener("click", function () {});
-  pageBar.appendChild(previousButton);
+      const arrayOfEntries = Object.entries(element);
+
+      changePosition(arrayOfEntries, indexOfCreated, arrayOfEntries.length - 1);
+
+      arrayOfEntries.forEach(([key, value]) => {
+        if (key !== "url") {
+          if (key == "created") {
+            const newDate = dateCorrect(value);
+
+            const valueCell = document.createElement("td");
+            valueCell.innerHTML = newDate;
+            row.appendChild(valueCell);
+          } else {
+            const valueCell = document.createElement("td");
+            valueCell.innerHTML = value;
+            row.appendChild(valueCell);
+          }
+        }
+      });
+
+      const buttonCell = document.createElement("td");
+      row.appendChild(buttonCell);
+
+      const deleteButton = document.createElement("button");
+      deleteButton.innerHTML = "Delete";
+      deleteButton.addEventListener("click", function () {
+        const mainContainer = document.getElementById("main-container");
+
+        const overlay = document.createElement("div");
+        overlay.setAttribute("id", "overlay");
+        mainContainer.appendChild(overlay);
+
+        const modal = document.createElement("div");
+        modal.setAttribute("class", "modal");
+        modal.setAttribute("id", modal);
+        mainContainer.appendChild(modal);
+
+        const modalQuestion = document.createElement("div");
+        modalQuestion.innerHTML = "Are you sure?";
+        modal.appendChild(modalQuestion);
+
+        const modalButtonBox = document.createElement("div");
+        modal.appendChild(modalButtonBox);
+
+        const yesButton = document.createElement("button");
+        yesButton.innerHTML = "Yes";
+        yesButton.setAttribute("class", "button");
+        yesButton.addEventListener("click", function () {
+          row.style.display = "none";
+          modal.style.display = "none";
+          modal.innerHTML = "";
+          overlay.style.display = "none";
+        });
+        modalButtonBox.appendChild(yesButton);
+
+        const noButton = document.createElement("button");
+        noButton.innerHTML = "No";
+        noButton.setAttribute("class", "button");
+        noButton.addEventListener("click", function () {
+          modal.style.display = "none";
+          modal.innerHTML = "";
+          overlay.style.display = "none";
+        });
+        modalButtonBox.appendChild(noButton);
+      });
+      buttonCell.appendChild(deleteButton);
+
+      const detailButton = document.createElement("button");
+      detailButton.innerHTML = "Details";
+      detailButton.addEventListener("click", function () {
+        detailContainer.innerHTML = "";
+        loadDetails(element.url);
+      });
+      buttonCell.appendChild(detailButton);
+    });
+  }
 }
 
 function renderHeaderButtons(APIData) {
@@ -265,6 +277,7 @@ function renderHeaderButtons(APIData) {
     const button = document.createElement("button");
     button.innerHTML = key.toUpperCase();
     button.addEventListener("click", function () {
+      currentPage = 1;
       loadCollection(value);
     });
     buttons.appendChild(button);
@@ -403,25 +416,26 @@ async function fillWithPeople(collection) {
         element.mass,
         element.gender
       );
-      currentDataBin.push(currentRecord);
-      console.log(currentDataBin);
+      currentDataContainer.push(currentRecord);
+      createTable();
     });
-  }
-  collection.results.forEach((element) => {
-    currentRecord = new Person(
-      element.name,
-      element.created,
-      element.url,
-      element.height,
-      element.mass,
-      element.gender
-    );
-    currentDataBin.push(currentRecord);
-  });
-  const response = await fetch(collection.next);
-  const nextCollection = await response.json();
+  } else {
+    collection.results.forEach((element) => {
+      currentRecord = new Person(
+        element.name,
+        element.created,
+        element.url,
+        element.height,
+        element.mass,
+        element.gender
+      );
+      currentDataContainer.push(currentRecord);
+    });
+    const response = await fetch(collection.next);
+    const nextCollection = await response.json();
 
-  fillWithPeople(nextCollection);
+    fillWithPeople(nextCollection);
+  }
 }
 
 async function fillWithPlanets(collection) {
@@ -436,7 +450,8 @@ async function fillWithPlanets(collection) {
         element.diameter,
         element.climate
       );
-      currentDataBin.push(currentRecord);
+      currentDataContainer.push(currentRecord);
+      createTable();
     });
   }
   collection.results.forEach((element) => {
@@ -449,7 +464,7 @@ async function fillWithPlanets(collection) {
       element.diameter,
       element.climate
     );
-    currentDataBin.push(currentRecord);
+    currentDataContainer.push(currentRecord);
   });
   const response = await fetch(collection.next);
   const nextCollection = await response.json();
@@ -468,7 +483,8 @@ async function fillWithSpecies(collection) {
         element.designation,
         element.average_height
       );
-      currentDataBin.push(currentRecord);
+      currentDataContainer.push(currentRecord);
+      createTable();
     });
   }
   collection.results.forEach((element) => {
@@ -480,7 +496,7 @@ async function fillWithSpecies(collection) {
       element.designation,
       element.average_height
     );
-    currentDataBin.push(currentRecord);
+    currentDataContainer.push(currentRecord);
   });
   const response = await fetch(collection.next);
   const nextCollection = await response.json();
@@ -499,7 +515,8 @@ async function fillWithStarships(collection) {
         element.manufacturer,
         element.hyperdrive_rating
       );
-      currentDataBin.push(currentRecord);
+      currentDataContainer.push(currentRecord);
+      createTable();
     });
   }
   collection.results.forEach((element) => {
@@ -511,7 +528,7 @@ async function fillWithStarships(collection) {
       element.manufacturer,
       element.hyperdrive_rating
     );
-    currentDataBin.push(currentRecord);
+    currentDataContainer.push(currentRecord);
   });
   const response = await fetch(collection.next);
   const nextCollection = await response.json();
@@ -529,7 +546,8 @@ async function fillWithVehicles(collection) {
         element.model,
         element.manufacturer
       );
-      currentDataBin.push(currentRecord);
+      currentDataContainer.push(currentRecord);
+      createTable();
     });
   }
   collection.results.forEach((element) => {
@@ -540,7 +558,7 @@ async function fillWithVehicles(collection) {
       element.model,
       element.manufacturer
     );
-    currentDataBin.push(currentRecord);
+    currentDataContainer.push(currentRecord);
   });
   const response = await fetch(collection.next);
   const nextCollection = await response.json();
