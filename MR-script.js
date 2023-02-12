@@ -673,6 +673,7 @@ function navBar() {
   navBar.style.display = "flex";
   navButtonChecker();
   navInputChecker();
+  tableCountView();
 
   const nextButton = document.getElementById("nextButton");
   nextButton.addEventListener("click", function () {
@@ -724,6 +725,18 @@ function navButtonChecker() {
 function navInputChecker() {
   const pageInput = document.getElementById("pageInput");
   pageInput.value = currentPage;
+}
+
+function tableCountView() {
+  const tableCountSelector = document.getElementById("tableCountSelect");
+  tableCountSelector.style.display = "flex";
+  tableCountSelector.addEventListener("change", function () {
+    const selectedIndex = tableCountSelector.value;
+    currentTableCount = selectedIndex;
+    createTable();
+    navButtonChecker();
+    navInputChecker();
+  });
 }
 
 initiation();
