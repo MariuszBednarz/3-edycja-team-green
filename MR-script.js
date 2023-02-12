@@ -7,7 +7,7 @@ const state = {
 let currentCollection;
 let currentDataContainer;
 let currentDetails;
-let currentTableContainer;
+let currentTableContainer = [];
 let currentPage = 1;
 let currentTableCount = 10;
 
@@ -138,6 +138,7 @@ async function dataContainerFiller() {
 function createTable() {
   const tableSpace = document.getElementById("tableSpace");
   tableSpace.innerHTML = "";
+  currentTableContainer = [];
 
   const table = document.createElement("table");
   table.setAttribute("class", "table");
@@ -379,6 +380,7 @@ function renderHeaderButtons(APIData) {
     button.addEventListener("click", function () {
       currentPage = 1;
       loadCollection(value);
+      navBar();
     });
     buttons.appendChild(button);
     state.buttons.push(button);
@@ -664,6 +666,64 @@ async function fillWithVehicles(collection) {
   const nextCollection = await response.json();
 
   fillWithVehicles(nextCollection);
+}
+
+function navBar() {
+  const navBar = document.getElementById("navBar");
+  navBar.style.display = "flex";
+  navButtonChecker();
+  navInputChecker();
+
+  const nextButton = document.getElementById("nextButton");
+  nextButton.addEventListener("click", function () {
+    currentPage++;
+    createTable();
+    navButtonChecker();
+    navInputChecker();
+  });
+
+  const prevButton = document.getElementById("prevButton");
+  prevButton.addEventListener("click", function () {
+    if (currentPage == 1) {
+    } else {
+      currentPage--;
+      createTable();
+      navButtonChecker();
+      navInputChecker();
+    }
+  });
+
+  const pageInput = document.getElementById("pageInput");
+  const navInputSubmit = document.getElementById("navInputSubmit");
+  navInputSubmit.addEventListener("click", function () {
+    const numberValue = parseInt(pageInput.value);
+    if (!isNaN(numberValue)) {
+      currentPage = pageInput.value;
+      createTable();
+      navButtonChecker();
+    } else {
+      alert("Please enter a valid number");
+    }
+  });
+}
+
+function navButtonChecker() {
+  if (currentTableContainer.length !== currentTableCount) {
+    nextButton.style.display = "none";
+  } else {
+    nextButton.style.display = "flex";
+  }
+  if (currentPage == 1) {
+    prevButton.style.display = "none";
+    nextButton.style.display = "flex";
+  } else {
+    prevButton.style.display = "flex";
+  }
+}
+
+function navInputChecker() {
+  const pageInput = document.getElementById("pageInput");
+  pageInput.value = currentPage;
 }
 
 initiation();
