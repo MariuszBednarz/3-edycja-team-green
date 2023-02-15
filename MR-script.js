@@ -98,8 +98,6 @@ async function loadCollection(collection) {
   const response = await fetch(collection);
   const rawData = await response.json();
   currentCollection = rawData;
-  console.log(currentCollection);
-
   dataContainerFiller();
 }
 
@@ -671,9 +669,9 @@ async function fillWithVehicles(collection) {
 function navBar() {
   const navBar = document.getElementById("navBar");
   navBar.style.display = "flex";
+  tableCountView();
   navButtonChecker();
   navInputChecker();
-  tableCountView();
 
   const nextButton = document.getElementById("nextButton");
   nextButton.addEventListener("click", function () {
@@ -709,7 +707,7 @@ function navBar() {
 }
 
 function navButtonChecker() {
-  if (currentTableContainer.length !== currentTableCount) {
+  if (currentTableContainer.length != currentTableCount) {
     nextButton.style.display = "none";
   } else {
     nextButton.style.display = "flex";
