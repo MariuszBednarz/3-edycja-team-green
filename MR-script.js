@@ -86,11 +86,55 @@ class Starship extends Base {
   }
 }
 
+const playButton = document.getElementById("play");
+const loader = document.getElementById("loader");
+const header = document.getElementById("header");
+const contentContainer = document.getElementById("content");
+const returnButton = document.getElementById("returnButton");
+const tableSpace = document.getElementById("tableSpace");
+const mainContainer = document.getElementById("main-container");
+const detailContainer = document.getElementById("detailContainer");
+
+playButton.addEventListener("click", () => {
+  playButton.style.animation = "button-disappear 3s";
+  playButton.style.animationFillMode = "both";
+  setTimeout(() => {
+    playButton.style.display = "none";
+  }, 3000);
+  setTimeout(() => {
+    loader.style.display = "flex";
+    loader.style.animation = "appear 1s";
+    loader.style.animationFillMode = "both";
+  }, 4000);
+  setTimeout(() => {
+    loader.style.animation = "disappear 1s";
+    loader.style.animationFillMode = "both";
+    loader.style.display = "none";
+  }, 7000);
+  setTimeout(() => {
+    initiation();
+    header.style.display = "flex";
+    header.style.animation = "appear 1s";
+    header.style.animationFillMode = "both";
+  }, 8000);
+});
+returnButton.addEventListener("click", returnToCollections);
+
+function returnToCollections() {
+  contentContainer.style.animation = "disappear 1s";
+  contentContainer.style.animationFillMode = "both";
+  setTimeout(() => {
+    contentContainer.style.display = "none";
+    header.style.display = "flex";
+    header.style.animation = "appear 1s";
+    header.style.animationFillMode = "both";
+  }, 1000);
+}
+
 async function initiation() {
   const response = await fetch(BASE_URL);
   const data = await response.json();
   api = data;
-  const buttons = document.getElementById("buttons");
   renderHeaderButtons(data);
 }
 
@@ -119,7 +163,12 @@ async function dataContainerFiller() {
         element.url
       );
       currentDataContainer.push(currentRecord);
-      createTable();
+      loader.style.animation = "disappear 1s";
+      loader.style.animationFillMode = "both";
+      setTimeout(function () {
+        createTable();
+        loader.style.display = "none";
+      }, 1000);
     });
   } else if (currentCollection.results[0].average_height !== undefined) {
     currentDataContainer = [];
@@ -134,7 +183,6 @@ async function dataContainerFiller() {
 }
 
 function createTable() {
-  const tableSpace = document.getElementById("tableSpace");
   tableSpace.innerHTML = "";
   currentTableContainer = [];
 
@@ -186,6 +234,7 @@ function createTable() {
   if (currentTableContainer.length == currentTableCount) {
     currentTableContainer.forEach((element) => {
       const row = document.createElement("tr");
+      row.setAttribute("class", "tableRow");
       table.appendChild(row);
 
       index++;
@@ -217,10 +266,9 @@ function createTable() {
       row.appendChild(buttonCell);
 
       const deleteButton = document.createElement("button");
+      deleteButton.setAttribute("class", "smallButtons");
       deleteButton.innerHTML = "Delete";
       deleteButton.addEventListener("click", function () {
-        const mainContainer = document.getElementById("main-container");
-
         const overlay = document.createElement("div");
         overlay.setAttribute("id", "overlay");
         mainContainer.appendChild(overlay);
@@ -261,6 +309,7 @@ function createTable() {
       buttonCell.appendChild(deleteButton);
 
       const detailButton = document.createElement("button");
+      detailButton.setAttribute("class", "smallButtons");
       detailButton.innerHTML = "Details";
       detailButton.addEventListener("click", function () {
         detailContainer.innerHTML = "";
@@ -273,6 +322,7 @@ function createTable() {
 
     currentTableContainer.forEach((element) => {
       const row = document.createElement("tr");
+      row.setAttribute("class", "tableRow");
       table.appendChild(row);
 
       index++;
@@ -304,10 +354,9 @@ function createTable() {
       row.appendChild(buttonCell);
 
       const deleteButton = document.createElement("button");
+      deleteButton.setAttribute("class", "smallButtons");
       deleteButton.innerHTML = "Delete";
       deleteButton.addEventListener("click", function () {
-        const mainContainer = document.getElementById("main-container");
-
         const overlay = document.createElement("div");
         overlay.setAttribute("id", "overlay");
         mainContainer.appendChild(overlay);
@@ -348,6 +397,7 @@ function createTable() {
       buttonCell.appendChild(deleteButton);
 
       const detailButton = document.createElement("button");
+      detailButton.setAttribute("class", "smallButtons");
       detailButton.innerHTML = "Details";
       detailButton.addEventListener("click", function () {
         detailContainer.innerHTML = "";
@@ -374,11 +424,24 @@ function createTable() {
 function renderHeaderButtons(APIData) {
   Object.entries(APIData).forEach(([key, value]) => {
     const button = document.createElement("button");
+    button.setAttribute("class", "collectionButton");
     button.innerHTML = key.toUpperCase();
     button.addEventListener("click", function () {
       currentPage = 1;
       loadCollection(value);
       navBar();
+      header.style.animation = "disappear 1s";
+      header.style.animationFillMode = "both";
+      setTimeout(() => {
+        header.style.display = "none";
+        tableSpace.innerHTML = "";
+        contentContainer.style.display = "flex";
+        contentContainer.style.animation = "appear 1s";
+        contentContainer.style.animationFillMode = "both";
+        loader.style.display = "flex";
+        loader.style.animation = "appear 1s";
+        loader.style.animationFillMode = "both";
+      }, 1000);
     });
     buttons.appendChild(button);
     state.buttons.push(button);
@@ -390,7 +453,6 @@ async function loadDetails(url) {
   response = await fetch(url);
   currentDetails = await response.json();
 
-  const detailContainer = document.getElementById("detailContainer");
   detailContainer.innerHTML = "";
   detailContainer.style.left = "50%";
 
@@ -402,6 +464,7 @@ async function loadDetails(url) {
     if (key !== "url" && key !== "edited" && key !== "opening_crawl") {
       if (typeof value === "object") {
         const row = document.createElement("tr");
+        row.setAttribute("class", "tableRow");
         table.appendChild(row);
 
         const detailProperty = document.createElement("td");
@@ -424,6 +487,7 @@ async function loadDetails(url) {
         });
       } else if (key === "created") {
         const row = document.createElement("tr");
+        row.setAttribute("class", "tableRow");
         table.appendChild(row);
 
         const detailProperty = document.createElement("td");
@@ -436,6 +500,7 @@ async function loadDetails(url) {
         row.appendChild(detailValue);
       } else {
         const row = document.createElement("tr");
+        row.setAttribute("class", "tableRow");
         table.appendChild(row);
 
         const detailProperty = document.createElement("td");
@@ -517,6 +582,9 @@ async function fillWithPeople(collection) {
         element.gender
       );
       currentDataContainer.push(currentRecord);
+      loader.style.animation = "disappear 1s";
+      loader.style.animationFillMode = "both";
+      loader.style.display = "none";
       createTable();
     });
   } else {
@@ -551,25 +619,29 @@ async function fillWithPlanets(collection) {
         element.climate
       );
       currentDataContainer.push(currentRecord);
+      loader.style.animation = "disappear 1s";
+      loader.style.animationFillMode = "both";
+      loader.style.display = "none";
       createTable();
     });
-  }
-  collection.results.forEach((element) => {
-    currentRecord = new Planet(
-      element.name,
-      element.created,
-      element.url,
-      element.rotation_period,
-      element.orbital_period,
-      element.diameter,
-      element.climate
-    );
-    currentDataContainer.push(currentRecord);
-  });
-  const response = await fetch(collection.next);
-  const nextCollection = await response.json();
+  } else {
+    collection.results.forEach((element) => {
+      currentRecord = new Planet(
+        element.name,
+        element.created,
+        element.url,
+        element.rotation_period,
+        element.orbital_period,
+        element.diameter,
+        element.climate
+      );
+      currentDataContainer.push(currentRecord);
+    });
+    const response = await fetch(collection.next);
+    const nextCollection = await response.json();
 
-  fillWithPlanets(nextCollection);
+    fillWithPlanets(nextCollection);
+  }
 }
 
 async function fillWithSpecies(collection) {
@@ -584,24 +656,28 @@ async function fillWithSpecies(collection) {
         element.average_height
       );
       currentDataContainer.push(currentRecord);
+      loader.style.animation = "disappear 1s";
+      loader.style.animationFillMode = "both";
+      loader.style.display = "none";
       createTable();
     });
-  }
-  collection.results.forEach((element) => {
-    currentRecord = new Specie(
-      element.name,
-      element.created,
-      element.url,
-      element.classification,
-      element.designation,
-      element.average_height
-    );
-    currentDataContainer.push(currentRecord);
-  });
-  const response = await fetch(collection.next);
-  const nextCollection = await response.json();
+  } else {
+    collection.results.forEach((element) => {
+      currentRecord = new Specie(
+        element.name,
+        element.created,
+        element.url,
+        element.classification,
+        element.designation,
+        element.average_height
+      );
+      currentDataContainer.push(currentRecord);
+    });
+    const response = await fetch(collection.next);
+    const nextCollection = await response.json();
 
-  fillWithSpecies(nextCollection);
+    fillWithSpecies(nextCollection);
+  }
 }
 
 async function fillWithStarships(collection) {
@@ -616,24 +692,28 @@ async function fillWithStarships(collection) {
         element.hyperdrive_rating
       );
       currentDataContainer.push(currentRecord);
+      loader.style.animation = "disappear 1s";
+      loader.style.animationFillMode = "both";
+      loader.style.display = "none";
       createTable();
     });
-  }
-  collection.results.forEach((element) => {
-    currentRecord = new Starship(
-      element.name,
-      element.created,
-      element.url,
-      element.model,
-      element.manufacturer,
-      element.hyperdrive_rating
-    );
-    currentDataContainer.push(currentRecord);
-  });
-  const response = await fetch(collection.next);
-  const nextCollection = await response.json();
+  } else {
+    collection.results.forEach((element) => {
+      currentRecord = new Starship(
+        element.name,
+        element.created,
+        element.url,
+        element.model,
+        element.manufacturer,
+        element.hyperdrive_rating
+      );
+      currentDataContainer.push(currentRecord);
+    });
+    const response = await fetch(collection.next);
+    const nextCollection = await response.json();
 
-  fillWithStarships(nextCollection);
+    fillWithStarships(nextCollection);
+  }
 }
 
 async function fillWithVehicles(collection) {
@@ -647,23 +727,27 @@ async function fillWithVehicles(collection) {
         element.manufacturer
       );
       currentDataContainer.push(currentRecord);
+      loader.style.animation = "disappear 1s";
+      loader.style.animationFillMode = "both";
+      loader.style.display = "none";
       createTable();
     });
-  }
-  collection.results.forEach((element) => {
-    currentRecord = new Vehicle(
-      element.name,
-      element.created,
-      element.url,
-      element.model,
-      element.manufacturer
-    );
-    currentDataContainer.push(currentRecord);
-  });
-  const response = await fetch(collection.next);
-  const nextCollection = await response.json();
+  } else {
+    collection.results.forEach((element) => {
+      currentRecord = new Vehicle(
+        element.name,
+        element.created,
+        element.url,
+        element.model,
+        element.manufacturer
+      );
+      currentDataContainer.push(currentRecord);
+    });
+    const response = await fetch(collection.next);
+    const nextCollection = await response.json();
 
-  fillWithVehicles(nextCollection);
+    fillWithVehicles(nextCollection);
+  }
 }
 
 function navBar() {
@@ -674,23 +758,10 @@ function navBar() {
   navInputChecker();
 
   const nextButton = document.getElementById("nextButton");
-  nextButton.addEventListener("click", function () {
-    currentPage++;
-    createTable();
-    navButtonChecker();
-    navInputChecker();
-  });
+  nextButton.addEventListener("click", nextPageLoader);
 
   const prevButton = document.getElementById("prevButton");
-  prevButton.addEventListener("click", function () {
-    if (currentPage == 1) {
-    } else {
-      currentPage--;
-      createTable();
-      navButtonChecker();
-      navInputChecker();
-    }
-  });
+  prevButton.addEventListener("click", prevPageLoader);
 
   const pageInput = document.getElementById("pageInput");
   const navInputSubmit = document.getElementById("navInputSubmit");
@@ -704,6 +775,23 @@ function navBar() {
       alert("Please enter a valid number");
     }
   });
+}
+
+function nextPageLoader() {
+  currentPage++;
+  createTable();
+  navButtonChecker();
+  navInputChecker();
+}
+
+function prevPageLoader() {
+  if (currentPage == 1) {
+  } else {
+    currentPage--;
+    createTable();
+    navButtonChecker();
+    navInputChecker();
+  }
 }
 
 function navButtonChecker() {
@@ -736,5 +824,3 @@ function tableCountView() {
     navInputChecker();
   });
 }
-
-initiation();

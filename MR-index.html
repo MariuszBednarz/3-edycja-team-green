@@ -9,39 +9,59 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Poller+One&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <script src="MR-script.js"></script>
-    <div id="main-container">
-      <div class="loader"></div>
-      <div class="header">
-        <div id="buttons"></div>
+    <div class="screen-overlay"></div>
+    <div class="spinner-box" id="loader">
+      <div class="circle-border">
+        <div class="circle-core"></div>
       </div>
-      <div id="content">
-        <select id="tableCountSelect">
-          <option value="5">5</option>
-          <option value="10" selected>10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-          <option value="25">25</option>
-          <option value="30">30</option>
-          <option value="35">35</option>
-          <option value="40">40</option>
-          <option value="45">45</option>
-          <option value="50">50</option>
-        </select>
-        <div id="tableSpace"></div>
-        <div id="detailContainer"></div>
-        <div id="navBar">
-          <button class="navButton" id="nextButton">&raquo;</button>
-          <input id="pageInput" />
-          <button id="navInputSubmit">GO</button>
-          <button class="navButton" id="prevButton">&laquo;</button>
+    </div>
+    <div class="main-container">
+      <div id="first-border">
+        <div id="second-border">
+          <div id="screen">
+            <button id="play">PLAY</button>
+            <div class="header" id="header">
+              <div id="buttons"></div>
+            </div>
+            <div id="content">
+              <div class="topBar">
+                <button id="returnButton">&lsaquo;</button>
+                <select id="tableCountSelect">
+                  <option value="5">5</option>
+                  <option value="10" selected>10</option>
+                  <option value="15">15</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="30">30</option>
+                  <option value="35">35</option>
+                  <option value="40">40</option>
+                  <option value="45">45</option>
+                  <option value="50">50</option>
+                </select>
+              </div>
+              <div id="tableSpace"></div>
+              <div id="detailContainer"></div>
+              <div id="navBar">
+                <button class="navButton" id="prevButton">&laquo;</button>
+                <input id="pageInput" />
+                <button id="navInputSubmit">GO</button>
+                <button class="navButton" id="nextButton">&raquo;</button>
+                <script src="merge.js"></script>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <script src="MR-script.js"></script>
   </body>
 </html>

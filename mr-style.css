@@ -1,34 +1,164 @@
+@keyframes border-appear {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+@keyframes button-appear {
+  0% {
+    opacity: 0%;
+    height: 0%;
+    width: 0%;
+    color: rgba(173, 216, 230, 0);
+  }
+  33% {
+    opacity: 100%;
+    height: 12%;
+    width: 0%;
+    color: rgba(173, 216, 230, 0);
+  }
+  66% {
+    opacity: 100%;
+    height: 12%;
+    width: 25%;
+    color: rgba(173, 216, 230, 0);
+  }
+  100% {
+    opacity: 100%;
+    height: 12%;
+    width: 25%;
+    color: rgba(173, 216, 230, 1);
+  }
+}
+
+@keyframes button-disappear {
+  0% {
+    opacity: 100%;
+    height: 12%;
+    width: 25%;
+    color: rgba(173, 216, 230, 1);
+    box-shadow: 0 0 30px 0 lightblue inset, 0 0 30px 0 lightblue;
+    text-shadow: 0 0 30px lightblue;
+  }
+  33% {
+    opacity: 100%;
+    height: 12%;
+    width: 25%;
+    color: rgba(173, 216, 230, 0);
+    box-shadow: 0 0 0 0;
+    text-shadow: 0 0 0;
+  }
+  66% {
+    opacity: 100%;
+    height: 12%;
+    width: 0%;
+    color: rgba(173, 216, 230, 0);
+  }
+  100% {
+    opacity: 0%;
+    height: 0%;
+    width: 0%;
+    color: rgba(173, 216, 230, 0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+
+@keyframes disappear {
+  from {
+    opacity: 100%;
+  }
+  to {
+    opacity: 0%;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: 1s ease-in-out;
   text-align: center;
 }
 
 body {
-  font-family: "Poller One", cursive;
+  font-family: "Orbitron", sans-serif;
+  color: lightblue;
   height: 100vh;
   width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* .mainContainer {
-} */
+button {
+  color: lightblue;
+  font-family: inherit;
+  font-size: 1em;
+  border: solid 5px rgb(173, 216, 230);
+  border-radius: 30px;
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  padding: 10px;
+  transition: 0.5s ease-in-out;
+}
+
+.smallButtons {
+  font-size: 0.5em;
+  border: solid 2px rgb(173, 216, 230);
+  padding: 3px;
+}
+
+button:hover {
+  box-shadow: 0 0 30px 0 lightblue inset, 0 0 30px 0 lightblue;
+  text-shadow: 0 0 30px lightblue;
+}
+
+.header {
+  display: none;
+}
 
 #content {
-  justify-content: start;
+  padding: 2% 5%;
+  display: none;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 
-/* .table {
-} */
+#returnButton {
+  font-size: 1em;
+  width: 10%;
+  padding: 0;
+}
 
 table {
-  border: 2px solid black;
   border-collapse: collapse;
+  width: 100%;
+  height: 100%;
 }
 
-/* div {
-} */
+.topBar {
+  display: flex;
+}
 
 .closeButton {
   position: absolute;
@@ -36,10 +166,9 @@ table {
 }
 
 #tableSpace {
-  background-color: greenyellow;
+  background-color: rgba(0, 0, 0, 0);
   width: 100%;
-  height: 70vh;
-  overflow: scroll;
+  height: 100%;
 }
 
 .modal {
@@ -77,8 +206,139 @@ table {
 
 #navBar {
   display: none;
+  justify-content: center;
+}
+
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(28, 28, 28);
+}
+
+#first-border {
+  width: 95%;
+  height: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0);
+  border: solid 5px lightblue;
+  border-radius: 25px;
+  box-shadow: 0px 0px 10px lightblue;
+
+  animation-name: border-appear;
+  animation-duration: 2s;
+  animation-delay: 1s;
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.72, 1.15, 0.52, -0.27);
+}
+
+#second-border {
+  width: 98%;
+  height: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0);
+  border: solid 5px lightblue;
+  box-shadow: 0px 0px 10px lightblue;
+  border-radius: 35px;
+}
+
+#screen {
+  width: 98%;
+  height: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0);
+  border: solid 5px lightblue;
+  border-radius: 45px;
+  box-shadow: 0px 0px 10px lightblue;
+}
+
+#play {
+  width: 0%;
+  height: 0%;
+  font-size: 2em;
+  color: rgba(173, 216, 230, 0);
+  letter-spacing: 15px;
+  animation-name: button-appear;
+  animation-duration: 3s;
+  animation-delay: 4s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+  transition: 1s ease-in-out;
+}
+
+.tableRow:hover {
+  background-color: rgba(173, 216, 230, 0.2);
+}
+
+#pageInput {
+  background-color: lightblue;
+  font-family: inherit;
+  border-radius: 30px;
 }
 
 #tableCountSelect {
+  background-color: lightblue;
+  font-family: inherit;
+  border-radius: 30px;
+  flex-grow: 1;
+}
+
+.collectionButton {
+  width: 100%;
+  margin: 1%;
+}
+
+.screen-overlay {
+  background-image: linear-gradient(transparent 0%, rgba(10, 16, 10, 0.2) 30%);
+  background-size: 1000px 1px;
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 11;
+  pointer-events: none;
+}
+
+.spinner-box {
   display: none;
+  width: 300px;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  position: absolute;
+}
+
+.circle-border {
+  width: 150px;
+  height: 150px;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: rgb(173, 216, 230);
+  background: linear-gradient(
+    0deg,
+    rgba(173, 216, 230, 0.1) 33%,
+    rgba(173, 216, 230, 1) 100%
+  );
+  animation: spin 0.8s linear 0s infinite;
+}
+
+.circle-core {
+  background-color: rgb(28, 28, 28);
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
