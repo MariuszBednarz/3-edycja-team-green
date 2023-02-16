@@ -94,8 +94,18 @@ const returnButton = document.getElementById("returnButton");
 const tableSpace = document.getElementById("tableSpace");
 const mainContainer = document.getElementById("main-container");
 const detailContainer = document.getElementById("detailContainer");
+const playSound = document.getElementById("playSound");
+const bootSound = document.getElementById("bootSound");
+const hoverSound = document.getElementById("hoverSound");
+const clickSound = document.getElementById("clickSound");
+const rowHoverSound = document.getElementById("rowHoverSound");
+
+window.addEventListener("load", () => {
+  bootSound.play();
+});
 
 playButton.addEventListener("click", () => {
+  playSound.play();
   playButton.style.animation = "button-disappear 3s";
   playButton.style.animationFillMode = "both";
   setTimeout(() => {
@@ -165,10 +175,8 @@ async function dataContainerFiller() {
       currentDataContainer.push(currentRecord);
       loader.style.animation = "disappear 1s";
       loader.style.animationFillMode = "both";
-      setTimeout(function () {
-        createTable();
-        loader.style.display = "none";
-      }, 1000);
+      loader.style.display = "none";
+      createTable();
     });
   } else if (currentCollection.results[0].average_height !== undefined) {
     currentDataContainer = [];
@@ -235,6 +243,9 @@ function createTable() {
     currentTableContainer.forEach((element) => {
       const row = document.createElement("tr");
       row.setAttribute("class", "tableRow");
+      row.addEventListener("mouseover", () => {
+        rowHoverSound.play();
+      });
       table.appendChild(row);
 
       index++;
@@ -323,6 +334,9 @@ function createTable() {
     currentTableContainer.forEach((element) => {
       const row = document.createElement("tr");
       row.setAttribute("class", "tableRow");
+      row.addEventListener("mouseover", () => {
+        rowHoverSound.play();
+      });
       table.appendChild(row);
 
       index++;
@@ -426,22 +440,25 @@ function renderHeaderButtons(APIData) {
     const button = document.createElement("button");
     button.setAttribute("class", "collectionButton");
     button.innerHTML = key.toUpperCase();
+    button.addEventListener("mouseover", function () {
+      hoverSound.play();
+    });
     button.addEventListener("click", function () {
+      clickSound.play();
+
       currentPage = 1;
       loadCollection(value);
       navBar();
       header.style.animation = "disappear 1s";
       header.style.animationFillMode = "both";
-      setTimeout(() => {
-        header.style.display = "none";
-        tableSpace.innerHTML = "";
-        contentContainer.style.display = "flex";
-        contentContainer.style.animation = "appear 1s";
-        contentContainer.style.animationFillMode = "both";
-        loader.style.display = "flex";
-        loader.style.animation = "appear 1s";
-        loader.style.animationFillMode = "both";
-      }, 1000);
+      header.style.display = "none";
+      tableSpace.innerHTML = "";
+      contentContainer.style.display = "flex";
+      contentContainer.style.animation = "appear 1s";
+      contentContainer.style.animationFillMode = "both";
+      loader.style.display = "flex";
+      loader.style.animation = "appear 1s";
+      loader.style.animationFillMode = "both";
     });
     buttons.appendChild(button);
     state.buttons.push(button);
@@ -465,6 +482,9 @@ async function loadDetails(url) {
       if (typeof value === "object") {
         const row = document.createElement("tr");
         row.setAttribute("class", "tableRow");
+        row.addEventListener("mouseover", () => {
+          rowHoverSound.play();
+        });
         table.appendChild(row);
 
         const detailProperty = document.createElement("td");
@@ -488,6 +508,9 @@ async function loadDetails(url) {
       } else if (key === "created") {
         const row = document.createElement("tr");
         row.setAttribute("class", "tableRow");
+        row.addEventListener("mouseover", () => {
+          rowHoverSound.play();
+        });
         table.appendChild(row);
 
         const detailProperty = document.createElement("td");
@@ -501,6 +524,9 @@ async function loadDetails(url) {
       } else {
         const row = document.createElement("tr");
         row.setAttribute("class", "tableRow");
+        row.addEventListener("mouseover", () => {
+          rowHoverSound.play();
+        });
         table.appendChild(row);
 
         const detailProperty = document.createElement("td");
