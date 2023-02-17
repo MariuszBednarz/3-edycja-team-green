@@ -19,15 +19,23 @@
   </head>
   <body>
     <div class="screen-overlay"></div>
+    <div id="soundButtons">
+      <button id="mutedButton" class="soundButton">&#128263;</button>
+      <button id="unmutedButton" class="soundButton">&#128266;</button>
+    </div>
     <div class="spinner-box" id="loader">
       <div class="circle-border">
         <div class="circle-core"></div>
       </div>
     </div>
-    <div class="main-container">
+    <div class="main-container" id="main-container">
       <div id="first-border">
         <div id="second-border">
           <div id="screen">
+            <div id="detailHider">
+              <div id="borderBar"></div>
+              <div id="detailContainer"></div>
+            </div>
             <button id="play">PLAY</button>
             <div class="header" id="header">
               <div id="buttons"></div>
@@ -49,7 +57,6 @@
                 </select>
               </div>
               <div id="tableSpace"></div>
-              <div id="detailContainer"></div>
               <div id="navBar">
                 <button class="navButton" id="prevButton">&laquo;</button>
                 <input id="pageInput" />
@@ -61,10 +68,26 @@
         </div>
       </div>
     </div>
-    <audio src="/3-edycja-team-green/playSound.mp3" id="playSound"></audio>
-    <audio src="/3-edycja-team-green/hoverOnButton.mp3" id="hoverSound"></audio>
-    <audio src="/3-edycja-team-green/clickButton.mp3" id="clickSound"></audio>
-    <audio src="/3-edycja-team-green/hoverOnRow.mp3" id="rowHoverSound"></audio>
+    <audio
+      src="/3-edycja-team-green/playSound.mp3"
+      id="playSound"
+      class="sound"
+    ></audio>
+    <audio
+      src="/3-edycja-team-green/hoverOnButton.mp3"
+      id="hoverSound"
+      class="sound"
+    ></audio>
+    <audio
+      src="/3-edycja-team-green/clickButton.mp3"
+      id="clickSound"
+      class="sound"
+    ></audio>
+    <audio
+      src="/3-edycja-team-green/hoverOnRow.mp3"
+      id="rowHoverSound"
+      class="sound"
+    ></audio>
     <audio
       src="/3-edycja-team-green/boot.mp3"
       id="bootSound"

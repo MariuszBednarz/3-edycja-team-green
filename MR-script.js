@@ -99,6 +99,13 @@ const bootSound = document.getElementById("bootSound");
 const hoverSound = document.getElementById("hoverSound");
 const clickSound = document.getElementById("clickSound");
 const rowHoverSound = document.getElementById("rowHoverSound");
+const soundButtonsContainer = document.getElementById("soundButtons");
+const mutedButton = document.getElementById("mutedButton");
+const unmutedButton = document.getElementById("unmutedButton");
+const sounds = document.getElementsByTagName("audio");
+const detailHider = document.getElementById("detailHider");
+const borderBar = document.getElementById("borderBar");
+const screen = document.getElementById("screen");
 
 window.addEventListener("load", () => {
   bootSound.play();
@@ -131,6 +138,11 @@ playButton.addEventListener("click", () => {
 returnButton.addEventListener("click", returnToCollections);
 
 function returnToCollections() {
+  if (loader.style.display == "flex") {
+    loader.style.animation = "disappear 1s";
+    loader.style.animationFillMode = "both";
+    loader.style.display = "none";
+  }
   contentContainer.style.animation = "disappear 1s";
   contentContainer.style.animationFillMode = "both";
   setTimeout(() => {
@@ -140,6 +152,24 @@ function returnToCollections() {
     header.style.animationFillMode = "both";
   }, 1000);
 }
+
+unmutedButton.addEventListener("click", () => {
+  mutedButton.style.display = "inline";
+  unmutedButton.style.display = "none";
+  mutedButton.style.animation = "none";
+  for (let i = 0; i < sounds.length; i++) {
+    sounds[i].muted = true;
+  }
+});
+
+mutedButton.addEventListener("click", () => {
+  unmutedButton.style.display = "inline";
+  mutedButton.style.display = "none";
+  unmutedButton.style.animation = "none";
+  for (let i = 0; i < sounds.length; i++) {
+    sounds[i].muted = false;
+  }
+});
 
 async function initiation() {
   const response = await fetch(BASE_URL);
@@ -282,12 +312,14 @@ function createTable() {
       deleteButton.addEventListener("click", function () {
         const overlay = document.createElement("div");
         overlay.setAttribute("id", "overlay");
-        mainContainer.appendChild(overlay);
+        screen.appendChild(overlay);
+
+        soundButtonsContainer.style.zIndex = 0;
 
         const modal = document.createElement("div");
         modal.setAttribute("class", "modal");
         modal.setAttribute("id", modal);
-        mainContainer.appendChild(modal);
+        screen.appendChild(modal);
 
         const modalQuestion = document.createElement("div");
         modalQuestion.innerHTML = "Are you sure?";
@@ -304,6 +336,7 @@ function createTable() {
           modal.style.display = "none";
           modal.innerHTML = "";
           overlay.style.display = "none";
+          soundButtonsContainer.style.zIndex = 1;
         });
         modalButtonBox.appendChild(yesButton);
 
@@ -314,6 +347,7 @@ function createTable() {
           modal.style.display = "none";
           modal.innerHTML = "";
           overlay.style.display = "none";
+          soundButtonsContainer.style.zIndex = 1;
         });
         modalButtonBox.appendChild(noButton);
       });
@@ -325,6 +359,13 @@ function createTable() {
       detailButton.addEventListener("click", function () {
         detailContainer.innerHTML = "";
         loadDetails(element.url);
+        detailHider.style.display = "flex";
+        borderBar.style.display = "flex";
+        borderBar.style.animation = "borderBar-appear 1s";
+        borderBar.style.animationFillMode = "both";
+        setTimeout(() => {
+          detailContainer.style.right = "0%";
+        }, 1000);
       });
       buttonCell.appendChild(detailButton);
     });
@@ -373,12 +414,12 @@ function createTable() {
       deleteButton.addEventListener("click", function () {
         const overlay = document.createElement("div");
         overlay.setAttribute("id", "overlay");
-        mainContainer.appendChild(overlay);
+        screen.appendChild(overlay);
 
         const modal = document.createElement("div");
         modal.setAttribute("class", "modal");
         modal.setAttribute("id", modal);
-        mainContainer.appendChild(modal);
+        screen.appendChild(modal);
 
         const modalQuestion = document.createElement("div");
         modalQuestion.innerHTML = "Are you sure?";
@@ -416,6 +457,13 @@ function createTable() {
       detailButton.addEventListener("click", function () {
         detailContainer.innerHTML = "";
         loadDetails(element.url);
+        detailHider.style.display = "flex";
+        borderBar.style.display = "flex";
+        borderBar.style.animation = "borderBar-appear 1s";
+        borderBar.style.animationFillMode = "both";
+        setTimeout(() => {
+          detailContainer.style.right = "0%";
+        }, 1000);
       });
       buttonCell.appendChild(detailButton);
     });
@@ -471,7 +519,6 @@ async function loadDetails(url) {
   currentDetails = await response.json();
 
   detailContainer.innerHTML = "";
-  detailContainer.style.left = "50%";
 
   const table = document.createElement("table");
   detailContainer.appendChild(table);
@@ -481,10 +528,6 @@ async function loadDetails(url) {
     if (key !== "url" && key !== "edited" && key !== "opening_crawl") {
       if (typeof value === "object") {
         const row = document.createElement("tr");
-        row.setAttribute("class", "tableRow");
-        row.addEventListener("mouseover", () => {
-          rowHoverSound.play();
-        });
         table.appendChild(row);
 
         const detailProperty = document.createElement("td");
@@ -507,10 +550,7 @@ async function loadDetails(url) {
         });
       } else if (key === "created") {
         const row = document.createElement("tr");
-        row.setAttribute("class", "tableRow");
-        row.addEventListener("mouseover", () => {
-          rowHoverSound.play();
-        });
+
         table.appendChild(row);
 
         const detailProperty = document.createElement("td");
@@ -523,10 +563,7 @@ async function loadDetails(url) {
         row.appendChild(detailValue);
       } else {
         const row = document.createElement("tr");
-        row.setAttribute("class", "tableRow");
-        row.addEventListener("mouseover", () => {
-          rowHoverSound.play();
-        });
+
         table.appendChild(row);
 
         const detailProperty = document.createElement("td");
@@ -543,7 +580,14 @@ async function loadDetails(url) {
   const closeButton = document.createElement("button");
   closeButton.innerHTML = "Close";
   closeButton.addEventListener("click", function () {
-    detailContainer.style.left = "100%";
+    detailContainer.style.right = "100%";
+    borderBar.style.animation = "borderBar-disappear 1s";
+    borderBar.style.animationFillMode = "both";
+    borderBar.style.animationDelay = "1s";
+    setTimeout(() => {
+      borderBar.style.display = "none";
+      detailHider.style.display = "none";
+    }, 2000);
   });
   closeButton.setAttribute("class", "closeButton");
   detailContainer.appendChild(closeButton);
@@ -845,6 +889,12 @@ function tableCountView() {
   tableCountSelector.addEventListener("change", function () {
     const selectedIndex = tableCountSelector.value;
     currentTableCount = selectedIndex;
+    if (selectedIndex > 20) {
+      tableSpace.style.overflow = "scroll";
+    } else {
+      tableSpace.style.overflow = "hidden";
+    }
+
     createTable();
     navButtonChecker();
     navInputChecker();
