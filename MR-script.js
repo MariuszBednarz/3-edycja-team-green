@@ -99,6 +99,9 @@ const bootSound = document.getElementById("bootSound");
 const hoverSound = document.getElementById("hoverSound");
 const clickSound = document.getElementById("clickSound");
 const rowHoverSound = document.getElementById("rowHoverSound");
+const detailsOnSound = document.getElementById("detailsOnSound");
+const detailsOffSound = document.getElementById("detailsOffSound");
+const returnSound = document.getElementById("returnSound");
 const soundButtonsContainer = document.getElementById("soundButtons");
 const mutedButton = document.getElementById("mutedButton");
 const unmutedButton = document.getElementById("unmutedButton");
@@ -106,9 +109,23 @@ const sounds = document.getElementsByTagName("audio");
 const detailHider = document.getElementById("detailHider");
 const borderBar = document.getElementById("borderBar");
 const screen = document.getElementById("screen");
+const elementsBlueButton = document.getElementById("elementsBlue");
+elementsBlueButton.addEventListener("click", changeElementsToBlue);
+const elementsGreenButton = document.getElementById("elementsGreen");
+elementsGreenButton.addEventListener("click", changeElementsToGreen);
+const elementsRedButton = document.getElementById("elementsRed");
+elementsRedButton.addEventListener("click", changeElementsToRed);
+const backgroundDGreyButton = document.getElementById("backgroundDarkGrey");
+backgroundDGreyButton.addEventListener("click", changeBackgroundToDGrey);
+const backgroundDRedButton = document.getElementById("backgroundDarkRed");
+backgroundDRedButton.addEventListener("click", changeBackgroundToDRed);
+const backgroundDBlueButton = document.getElementById("backgroundDarkBlue");
+backgroundDBlueButton.addEventListener("click", changeBackgroundToDBlue);
 
 window.addEventListener("load", () => {
-  bootSound.play();
+  setTimeout(() => {
+    bootSound.play();
+  }, 700);
 });
 
 playButton.addEventListener("click", () => {
@@ -143,6 +160,7 @@ function returnToCollections() {
     loader.style.animationFillMode = "both";
     loader.style.display = "none";
   }
+  returnSound.play();
   contentContainer.style.animation = "disappear 1s";
   contentContainer.style.animationFillMode = "both";
   setTimeout(() => {
@@ -154,7 +172,7 @@ function returnToCollections() {
 }
 
 unmutedButton.addEventListener("click", () => {
-  mutedButton.style.display = "inline";
+  mutedButton.style.display = "flex";
   unmutedButton.style.display = "none";
   mutedButton.style.animation = "none";
   for (let i = 0; i < sounds.length; i++) {
@@ -163,7 +181,7 @@ unmutedButton.addEventListener("click", () => {
 });
 
 mutedButton.addEventListener("click", () => {
-  unmutedButton.style.display = "inline";
+  unmutedButton.style.display = "flex";
   mutedButton.style.display = "none";
   unmutedButton.style.animation = "none";
   for (let i = 0; i < sounds.length; i++) {
@@ -358,6 +376,7 @@ function createTable() {
       detailButton.innerHTML = "Details";
       detailButton.addEventListener("click", function () {
         detailContainer.innerHTML = "";
+        detailsOnSound.play();
         loadDetails(element.url);
         detailHider.style.display = "flex";
         borderBar.style.display = "flex";
@@ -456,6 +475,7 @@ function createTable() {
       detailButton.innerHTML = "Details";
       detailButton.addEventListener("click", function () {
         detailContainer.innerHTML = "";
+        detailsOnSound.play();
         loadDetails(element.url);
         detailHider.style.display = "flex";
         borderBar.style.display = "flex";
@@ -580,6 +600,7 @@ async function loadDetails(url) {
   const closeButton = document.createElement("button");
   closeButton.innerHTML = "Close";
   closeButton.addEventListener("click", function () {
+    detailsOffSound.play();
     detailContainer.style.right = "100%";
     borderBar.style.animation = "borderBar-disappear 1s";
     borderBar.style.animationFillMode = "both";
@@ -899,4 +920,82 @@ function tableCountView() {
     navButtonChecker();
     navInputChecker();
   });
+}
+
+function changeElementsToBlue() {
+  document.documentElement.style.setProperty(
+    "--first-color",
+    "var(--elements-blue)"
+  );
+  document.documentElement.style.setProperty(
+    "--first-color-hover",
+    "var(--elements-blue-hover)"
+  );
+  document.documentElement.style.setProperty(
+    "--first-color-transparent",
+    "var(--elements-blue-transparent)"
+  );
+  document.documentElement.style.setProperty(
+    "--first-color-visible",
+    "var(--elements-blue-visible)"
+  );
+}
+
+function changeElementsToRed() {
+  document.documentElement.style.setProperty(
+    "--first-color",
+    "var(--elements-red)"
+  );
+  document.documentElement.style.setProperty(
+    "--first-color-hover",
+    "var(--elements-red-hover)"
+  );
+  document.documentElement.style.setProperty(
+    "--first-color-transparent",
+    "var(--elements-red-transparent)"
+  );
+  document.documentElement.style.setProperty(
+    "--first-color-visible",
+    "var(--elements-red-visible)"
+  );
+}
+
+function changeElementsToGreen() {
+  document.documentElement.style.setProperty(
+    "--first-color",
+    "var(--elements-green)"
+  );
+  document.documentElement.style.setProperty(
+    "--first-color-hover",
+    "var(--elements-green-hover)"
+  );
+  document.documentElement.style.setProperty(
+    "--first-color-transparent",
+    "var(--elements-green-transparent)"
+  );
+  document.documentElement.style.setProperty(
+    "--first-color-visible",
+    "var(--elements-green-visible)"
+  );
+}
+
+function changeBackgroundToDGrey() {
+  document.documentElement.style.setProperty(
+    "--second-color",
+    "var(--background-darkGrey)"
+  );
+}
+
+function changeBackgroundToDRed() {
+  document.documentElement.style.setProperty(
+    "--second-color",
+    "var(--background-darkRed)"
+  );
+}
+
+function changeBackgroundToDBlue() {
+  document.documentElement.style.setProperty(
+    "--second-color",
+    "var(--background-darkBlue)"
+  );
 }
