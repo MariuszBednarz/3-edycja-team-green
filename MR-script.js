@@ -545,58 +545,21 @@ async function loadDetails(url) {
 
   const detailsEntries = Object.entries(currentDetails);
   detailsEntries.forEach(([key, value]) => {
-    if (key !== "url" && key !== "edited" && key !== "opening_crawl") {
-      if (typeof value === "object") {
-        const row = document.createElement("tr");
-        table.appendChild(row);
-
-        const detailProperty = document.createElement("td");
-        detailProperty.setAttribute("id", "detailKey");
-        detailProperty.innerHTML = key;
-        row.appendChild(detailProperty);
-
-        const detailValue = document.createElement("td");
-        row.appendChild(detailValue);
-
-        const listofNames = document.createElement("ul");
-        detailValue.appendChild(listofNames);
-
-        const arrayofLinks = linkListLoader(value);
-
-        arrayofLinks.forEach((element) => {
-          const nameOnList = document.createElement("li");
-          nameOnList.innerHTML = element;
-          listofNames.appendChild(nameOnList);
-        });
-      } else if (key === "created") {
-        const row = document.createElement("tr");
-
-        table.appendChild(row);
-
-        const detailProperty = document.createElement("td");
-        detailProperty.setAttribute("id", "detailKey");
-        detailProperty.innerHTML = key;
-        row.appendChild(detailProperty);
-
-        const detailValue = document.createElement("td");
-        detailValue.innerHTML = dateCorrect(value);
-        row.appendChild(detailValue);
-      } else {
-        const row = document.createElement("tr");
-
-        table.appendChild(row);
-
-        const detailProperty = document.createElement("td");
-        detailProperty.setAttribute("id", "detailKey");
-        detailProperty.innerHTML = key;
-        row.appendChild(detailProperty);
-
-        const detailValue = document.createElement("td");
-        detailValue.innerHTML = value;
-        row.appendChild(detailValue);
-      }
+    detailTableCreator(key, value, table);
+    if (typeof value === "object") {
+      const emptyRow = document.createElement("tr");
+      table.appendChild(emptyRow);
+      const emptyCell = document.createElement("td");
+      emptyCell.innerHTML = "none";
+      emptyCell.style.visibility = "hidden";
+      emptyRow.appendChild(emptyCell);
     }
   });
+
+  if (table.offsetHeight > detailContainer.offsetHeight) {
+    table.style.overflowY = "scroll";
+  }
+
   const closeButton = document.createElement("button");
   closeButton.innerHTML = "Close";
   closeButton.addEventListener("click", function () {
@@ -612,6 +575,76 @@ async function loadDetails(url) {
   });
   closeButton.setAttribute("class", "closeButton");
   detailContainer.appendChild(closeButton);
+}
+
+async function detailTableCreator(key, value, table) {
+  debugger;
+  console.log(value);
+  if (key !== "url" && key !== "edited" && key !== "opening_crawl") {
+    if (typeof value === "object") {
+      const row = document.createElement("tr");
+      table.appendChild(row);
+
+      const detailProperty = document.createElement("td");
+      detailProperty.setAttribute("id", "detailKey");
+      detailProperty.innerHTML = key;
+      row.appendChild(detailProperty);
+
+      const detailValue = document.createElement("td");
+      row.appendChild(detailValue);
+
+      const listofNames = document.createElement("ul");
+      detailValue.appendChild(listofNames);
+
+      const arrayofLinks = await linkListLoader(value);
+      arrayofLinks.forEach((name) => {
+        const nameOnList = document.createElement("li");
+        nameOnList.innerHTML = name;
+        listofNames.appendChild(nameOnList);
+      });
+    } else if (value.startsWith("http")) {
+      const response = await fetch(value);
+      const data = await response.json();
+
+      const row = document.createElement("tr");
+      table.appendChild(row);
+
+      const detailProperty = document.createElement("td");
+      detailProperty.setAttribute("id", "detailKey");
+      detailProperty.innerHTML = key;
+      row.appendChild(detailProperty);
+
+      const detailValue = document.createElement("td");
+      detailValue.innerHTML = data.name;
+      row.appendChild(detailValue);
+    } else if (key === "created") {
+      const row = document.createElement("tr");
+
+      table.appendChild(row);
+
+      const detailProperty = document.createElement("td");
+      detailProperty.setAttribute("id", "detailKey");
+      detailProperty.innerHTML = key;
+      row.appendChild(detailProperty);
+
+      const detailValue = document.createElement("td");
+      detailValue.innerHTML = dateCorrect(value);
+      row.appendChild(detailValue);
+    } else {
+      const row = document.createElement("tr");
+
+      table.appendChild(row);
+
+      const detailProperty = document.createElement("td");
+      detailProperty.setAttribute("id", "detailKey");
+      detailProperty.innerHTML = key;
+      row.appendChild(detailProperty);
+
+      const detailValue = document.createElement("td");
+      detailValue.innerHTML = value;
+      row.appendChild(detailValue);
+    }
+  }
 }
 
 function changePosition(arr, from, to) {
@@ -633,22 +666,18 @@ function dateCorrect(date) {
   return day.concat("-").concat(month).concat("-").concat(year).join(``);
 }
 
-function linkListLoader(urlList) {
-  const arrayOfNames = [];
-  urlList.forEach((element) => {
-    let urlData;
-    fetch(element)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.name == undefined) {
-          urlData = data.title;
-        } else {
-          urlData = data.name;
-        }
-        arrayOfNames.push(urlData);
-      });
+async function linkListLoader(urlList) {
+  const arrayOfPromises = urlList.map(async (element) => {
+    const response = await fetch(element);
+    const data = await response.json();
+    console.log(data);
+    if (data.name == undefined) {
+      return data.title;
+    } else {
+      return data.name;
+    }
   });
-  return arrayOfNames;
+  return Promise.all(arrayOfPromises);
 }
 
 async function linkNameLoader(url) {
