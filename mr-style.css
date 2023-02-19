@@ -339,6 +339,14 @@ table {
   border: none;
 }
 
+#searchbar {
+  background-color: var(--first-color);
+  font-family: inherit;
+  border-radius: 30px;
+  border: none;
+  flex-grow: 1;
+}
+
 #tableCountSelect {
   background-color: var(--first-color);
   font-family: inherit;

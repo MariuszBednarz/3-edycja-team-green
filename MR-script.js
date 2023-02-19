@@ -5,6 +5,8 @@ const state = {
   detailContainer: [],
 };
 let currentCollection;
+let mainDataContainer;
+let filteredDataContainer;
 let currentDataContainer;
 let currentDetails;
 let currentTableContainer = [];
@@ -121,6 +123,27 @@ const backgroundDRedButton = document.getElementById("backgroundDarkRed");
 backgroundDRedButton.addEventListener("click", changeBackgroundToDRed);
 const backgroundDBlueButton = document.getElementById("backgroundDarkBlue");
 backgroundDBlueButton.addEventListener("click", changeBackgroundToDBlue);
+const searchbar = document.getElementById("searchbar");
+searchbar.addEventListener("input", (e) => {
+  const filterValue = e.target.value.toLowerCase();
+  console.log(filterValue);
+
+  filteredDataContainer = mainDataContainer.filter((object) => {
+    for (let key in object) {
+      if (object[key].toLowerCase().includes(filterValue)) {
+        return true;
+      }
+    }
+    return false;
+  });
+  if (filterValue == "" || filterValue == undefined || filterValue == null) {
+    currentDataContainer = mainDataContainer;
+    createTable();
+  } else {
+    currentDataContainer = filteredDataContainer;
+    createTable();
+  }
+});
 
 window.addEventListener("load", () => {
   setTimeout(() => {
@@ -205,13 +228,13 @@ async function loadCollection(collection) {
 
 async function dataContainerFiller() {
   if (currentCollection.results[0].gender !== undefined) {
-    currentDataContainer = [];
+    mainDataContainer = [];
     fillWithPeople(currentCollection);
   } else if (currentCollection.results[0].rotation_period !== undefined) {
-    currentDataContainer = [];
+    mainDataContainer = [];
     fillWithPlanets(currentCollection);
   } else if (currentCollection.results[0].episode_id !== undefined) {
-    currentDataContainer = [];
+    mainDataContainer = [];
     currentCollection.results.forEach((element) => {
       currentRecord = new Film(
         element.title,
@@ -220,20 +243,21 @@ async function dataContainerFiller() {
         element.created,
         element.url
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
       loader.style.animation = "disappear 1s";
       loader.style.animationFillMode = "both";
       loader.style.display = "none";
+      currentDataContainer = mainDataContainer;
       createTable();
     });
   } else if (currentCollection.results[0].average_height !== undefined) {
-    currentDataContainer = [];
+    mainDataContainer = [];
     fillWithSpecies(currentCollection);
   } else if (currentCollection.results[0].hyperdrive_rating !== undefined) {
-    currentDataContainer = [];
+    mainDataContainer = [];
     fillWithStarships(currentCollection);
   } else {
-    currentDataContainer = [];
+    mainDataContainer = [];
     fillWithVehicles(currentCollection);
   }
 }
@@ -252,7 +276,7 @@ function createTable() {
   const firstRow = document.createElement("tr");
   table.appendChild(firstRow);
 
-  const arrayOfKeys = Object.keys(currentDataContainer[0]);
+  const arrayOfKeys = Object.keys(mainDataContainer[0]);
   const indexOfCreated = arrayOfKeys.indexOf("created");
   changePosition(arrayOfKeys, indexOfCreated, arrayOfKeys.length - 1);
 
@@ -491,7 +515,7 @@ function createTable() {
       const emptyRow = document.createElement("tr");
       table.appendChild(emptyRow);
 
-      Object.keys(currentDataContainer[0]).forEach((key) => {
+      Object.keys(mainDataContainer[0]).forEach((key) => {
         if (key !== "url") {
           const emptyCell = document.createElement("td");
           emptyCell.innerHTML = "none";
@@ -701,10 +725,11 @@ async function fillWithPeople(collection) {
         element.mass,
         element.gender
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
       loader.style.animation = "disappear 1s";
       loader.style.animationFillMode = "both";
       loader.style.display = "none";
+      currentDataContainer = mainDataContainer;
       createTable();
     });
   } else {
@@ -717,7 +742,7 @@ async function fillWithPeople(collection) {
         element.mass,
         element.gender
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
     });
     const response = await fetch(collection.next);
     const nextCollection = await response.json();
@@ -738,10 +763,11 @@ async function fillWithPlanets(collection) {
         element.diameter,
         element.climate
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
       loader.style.animation = "disappear 1s";
       loader.style.animationFillMode = "both";
       loader.style.display = "none";
+      currentDataContainer = mainDataContainer;
       createTable();
     });
   } else {
@@ -755,7 +781,7 @@ async function fillWithPlanets(collection) {
         element.diameter,
         element.climate
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
     });
     const response = await fetch(collection.next);
     const nextCollection = await response.json();
@@ -775,10 +801,11 @@ async function fillWithSpecies(collection) {
         element.designation,
         element.average_height
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
       loader.style.animation = "disappear 1s";
       loader.style.animationFillMode = "both";
       loader.style.display = "none";
+      currentDataContainer = mainDataContainer;
       createTable();
     });
   } else {
@@ -791,7 +818,7 @@ async function fillWithSpecies(collection) {
         element.designation,
         element.average_height
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
     });
     const response = await fetch(collection.next);
     const nextCollection = await response.json();
@@ -811,10 +838,11 @@ async function fillWithStarships(collection) {
         element.manufacturer,
         element.hyperdrive_rating
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
       loader.style.animation = "disappear 1s";
       loader.style.animationFillMode = "both";
       loader.style.display = "none";
+      currentDataContainer = mainDataContainer;
       createTable();
     });
   } else {
@@ -827,7 +855,7 @@ async function fillWithStarships(collection) {
         element.manufacturer,
         element.hyperdrive_rating
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
     });
     const response = await fetch(collection.next);
     const nextCollection = await response.json();
@@ -846,10 +874,11 @@ async function fillWithVehicles(collection) {
         element.model,
         element.manufacturer
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
       loader.style.animation = "disappear 1s";
       loader.style.animationFillMode = "both";
       loader.style.display = "none";
+      currentDataContainer = mainDataContainer;
       createTable();
     });
   } else {
@@ -861,7 +890,7 @@ async function fillWithVehicles(collection) {
         element.model,
         element.manufacturer
       );
-      currentDataContainer.push(currentRecord);
+      mainDataContainer.push(currentRecord);
     });
     const response = await fetch(collection.next);
     const nextCollection = await response.json();
