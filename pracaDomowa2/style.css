@@ -1,0 +1,391 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Space+Mono:ital,wght@0,700;1,400;1,700&display=swap');
+
+
+:root {
+--background-color: black;
+--text-color: black;
+--text-inverse: white;
+--mode-background: url("assets/background-black.png");
+--opacity: rgba(255, 255, 255, 0.7);
+}
+  
+.dark-mode {
+--background-color: white;
+--text-color: black;
+--text-inverse: black;
+--mode-background: url("assets/background-white.png");
+--opacity: rgba(0, 0, 0, 0.4);
+}
+
+input {
+background-color: lightgrey;
+}
+  
+body {
+font-family: 'Lato', sans-serif;
+color: var(--text-color);
+margin: 0;
+padding: 0;
+}
+
+
+table img {
+height: 20px;
+width: 20px;
+margin-right: 5px;
+}
+
+[id*="detailsID"], [id*="arrowID"]{
+height: 20px;
+width: 20px;
+}
+
+#deleteInfo {
+z-index: 3;
+height: 25px;
+position: absolute;
+height: 100px;
+background-color: var(--background-color);
+color: var(--text-inverse);
+border-radius: 5px;
+border: solid var(--text-inverse) 2px;
+padding: 10px
+}
+
+#deleteInfo button {
+display: inline-block;
+z-index: 3;
+background-color: white;
+padding: 4px;
+border: solid black 2px;
+border-radius: 5px;
+text-align: center;
+}
+
+
+.active {
+display: none;
+}
+
+#arrowDetails {
+display: inline-block;
+z-index: 3;
+background-color: white;
+padding: 10px;
+border: solid black 2px;
+border-radius: 5px;
+margin: 0;
+}
+
+#buttons {
+width: 100%;
+display: flex;
+height: 15%;
+justify-content: center;
+color: var(--text-color);
+}
+
+
+
+#logo {
+width: 125px;
+justify-content: flex-start;
+margin-top: 15px;
+
+}
+
+.menu{
+background-color: transparent;
+border: none;
+color: var(--text-inverse);
+display: block;
+font-family: 'Lato', sans-serif;
+font-family: 'Space Mono', monospace;
+margin-top: 1%;
+font-size: 14px;
+}
+
+.background {
+position:fixed;
+width: 100%;
+height: 100%;
+z-index: -5;
+background-image: var(--mode-background);
+}
+
+#mainWrapper {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+}
+
+#clickData { 
+background-color: var(--opacity);
+padding: 10px;
+margin-right: 5%;
+margin-left: 5%;
+border-radius: 10px;
+justify-content: center;
+display: flex;
+flex-wrap: wrap;
+opacity: 0%;
+}
+
+#mainTable {
+justify-content: center;
+}
+
+#paginationWrapper{
+width:100%;
+}
+
+#paginationWrapper > * {
+justify-self: center;
+}
+
+.pagination {
+border-radius: 10px;
+border: 2px solid black; 
+background-color: transparent; 
+width: 25px;
+height: 25px;
+font-weight: bold;
+}
+
+#gameOverMessage {
+ font-size: 50px;
+ color: red;
+ width: 100%;
+ text-align: center;
+}
+
+table {
+border: 1px solid black;
+border-radius: 5px;
+}
+
+#paginationPanel {
+display: flex;
+flex-wrap: wrap;
+justify-self: center;
+}
+
+#paginationUpper {
+text-align: center;
+margin-top: 1%;
+width:100%;
+}
+
+select {
+border: solid black 2px;
+padding: 4px 8px;
+font-weight: 600;
+font-size: 11px;
+-webkit-appearance: none;
+color: black;
+background: url("assets/downarrowmenu.png") 90% 55%;
+background-repeat: no-repeat;  
+border-radius: 5px;
+background-size:35%;
+}
+
+#pageNumber {
+border: solid black 2px;
+padding: 4px 8px;
+border-radius: 5px;
+}
+
+
+#paginationLower {
+text-align: center;
+display: flex;
+justify-content: center;
+width: 100%;
+margin-top:10px;
+}
+    
+#paginationLower label {
+width: 100%;
+text-align: center;
+margin-bottom: 1px;
+font-size: 11px;
+font-weight: 700;
+display: block;
+}
+
+#paginationLower input {
+border: solid black 2px;
+height: 18px;
+border-radius: 5px;
+}
+
+#deletionButton{
+border-radius: 5px;
+padding: 4px;
+border: solid black 2px;
+background-color: transparent; 
+}
+
+#moreInfo{
+display: flex;
+flex-wrap: wrap;
+}
+
+#moreInfo img  {
+text-align: right;
+margin-left: auto;
+width: 20px;
+height: 20px;
+margin-top: 5px;       
+}
+
+#moreInfo h5  {
+margin-top: 5px;
+display: block;
+width: 100%;
+}
+
+#tableDetails {
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
+}
+
+#moreInfo h4 {
+text-align: left;
+}
+
+#modeSwitch {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 100%;
+margin-bottom: 5px;
+}
+    
+.slider {
+cursor: pointer;
+background-color: #E1C71D;
+border-radius: 34px;
+transition: 0.6s;
+width: 60px;
+height: 34px;
+z-index: 5;
+}
+    
+.slider:before {
+position:absolute;
+content: "";
+height: 26px;
+width: 26px;
+background-color: white;
+border-radius: 50%;
+transition: 0.4s;
+margin: 4px;
+background-image: url(assets/dark.png);
+background-repeat: no-repeat;
+background-position: center;
+background-size: 15px;
+}
+
+.slider-active {
+background-color: lightblue;
+
+}
+
+.slider-active:before {
+transform: translateX(26px);
+background-image: url(assets/light.png);
+}
+
+#gameWrapper {
+display: none;
+}
+    
+#canvas-1 {
+width: 800px;
+height: 500px;
+background-color: #d79c50;
+}
+
+#startGamePanel{
+width: 100%;
+display: flex;
+justify-content: center;
+margin-top: 10px;
+}
+
+#startGame {
+display: inline-block;
+background-color: white;
+padding: 4px;
+border: solid black 2px;
+border-radius: 5px;
+text-align: center;
+
+}
+  
+.loadSpinner.active {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
+  .loadSpinner.active div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid black;
+    border-radius: 50%;
+    animation: loadSpinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: black transparent transparent transparent;
+  }
+  .loadSpinner.active div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .loadSpinner.active div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .loadSpinner.active div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes loadSpinner {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media(max-width: 1023px) {
+
+
+
+      #mainTable {
+        display: block;
+      }
+      #mainTable tr:first-child {
+        display: none;
+      }
+      #mainTable tr {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        border: 1px solid #ddd;
+      }
+      #mainTable td {
+        flex-basis: 100%;
+       text-align: center;
+      }
+      #mainTable td:first-child {
+        font-weight: bold;
+        text-transform: uppercase;
+        background-color: #ddd;
+        
+      }
+  }

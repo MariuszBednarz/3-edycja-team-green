@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>STAR WARS API</title>
+<link rel="stylesheet" href ="style.css">  
+</head>
+
+<body>
+<div id="mainWrapper"> 
+    <img class="background" id="backgroundPhoto">
+    <img id="logo" src="assets/logo-2.png"> 
+<div id="buttons"> </div>
+<div id="modeSwitch">
+    <div class="slider" > </div>
+</div>
+
+<div id="clickData"> 
+
+    <table id="mainTable"> </table>
+    <div id="tableDetails"></div>
+    <div class="loadSpinner active"><div></div><div></div><div></div><div></div></div>
+    <div id="tableSearchDetails"></div>
+    <div id="paginationWrapper" class="active"> 
+    <div id="paginationPanel" >
+    <div id="paginationUpper" >
+    <button onclick = "prevPage()" class="pagination"><</button>
+    <button onclick = "deleteSelected()" id="deletionButton">DELETE SELECTED</button>
+    <input id = "pageNumber" type = "number" onchange = "pageInput(event)">
+    <select id = "pageSelection" onchange = "selectOfPageSize()">
+    <option> 2 </option>
+    <option> 5 </option>
+    <option> 10 </option>
+    </select>
+    <button onclick = "nextPage()" class="pagination">></button></div>
+    
+    <div id = "paginationLower"> 
+     
+    <div id = "paginationLowerSearch1">   
+    <label for="endpointSearch" class="label">Search by Name</label>
+    <input id ="endpointSearch" type = "text" onchange = "endpointSearch(event)">
+    </div>
+    <div id = "paginationLowerSearch2">   
+    <label for="pageSearch" class="label">Search by All Columns</label>
+    <input id ="pageSearch" type = "text" onchange = "pageSearch(event)"></div><br></div>
+</div></div></div>
+
+<div id="gameOverMessage"> </div>
+
+<div id="startGamePanel"> 
+    <button id="startGame" onclick = "startGame()">Start Game</button>
+    <button id="resetGame" onclick = "resetGame()">Reset Game</button>
+    <button id="closeGame" onclick = "closeGame()">Close Game</button>
+</div>
+
+<div id="gameWrapper">  
+    <canvas id="canvas-1"></canvas>
+</div> 
+</div> 
+
+<script src= "script.js"></script>
+<script src= "game.js"></script>
+<script src= "classes.js"></script>
+</body>
+</html>
