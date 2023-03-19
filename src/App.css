@@ -1,0 +1,144 @@
+.App {
+  text-align: center;
+}
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained {
+  background-color: #7b1fa2
+}
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.text-strike {
+  text-decoration: line-through;
+}
+
+.done {
+  margin-left: 20px;
+}
+
+.rating {
+display: flex;
+justify-content: start;
+margin-top: -20px;
+}
+
+
+.red-text {
+  color: red;
+}
+
+.high-priority {
+  display: flex;
+  justify-content: center;
+margin-left: 100px;
+  color: red;
+}
+
+.high-priority-h2 {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  margin-left: 100px;
+
+}
+
+.bothLists {
+  display: flex;
+  align-items: start;
+  justify-content: space-around;
+  flex-direction: row-reverse;
+}
+.title {
+  display: flex;
+justify-content: center;}
+
+
+.top {
+  display: flex;
+  justify-content: center;
+
+
+}
+
+.save-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+.counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.element-of-list {
+  display: flex;
+  flex-direction: row;
+align-items: start;
+  height: 30px;
+}
+
+.first-list {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: start;
+  width: 700px;
+  font-size: 12px;
+
+}
+
+.regular-priority-h2 {
+  font-size: 24px;
+}
+
+.high-priority-list {
+  justify-self: end;
+  align-items: end;
+  flex-direction: column;
+}
+
+.MuiNativeSelect-select.MuiNativeSelect-outlined.MuiInputBase-input.MuiInput-input.css-19ygod6-MuiNativeSelect-select-MuiInputBase-input-MuiInput-input {
+border: solid;
+border: 0;
+  height: 40px;
+}
+
+.css-1b0ve20
+{
+margin-top: 10px;
+}
